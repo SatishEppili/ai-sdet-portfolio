@@ -10,7 +10,8 @@
 - [x] `docker/docker-compose.yml`: Open WebUI, Juice Shop, Ollama (optional)
 - [x] Install Ollama; `ollama pull llama3.2`; `npm run llm:ping` passes
 - [ ] Install Docker Desktop (only needed from Phase 2: Open WebUI, Juice Shop)
-- [ ] Push to GitHub (public repo); CI green
+- [x] Push to GitHub (public repo); CI green
+- [ ] Run Toolshop in Docker inside CI so all 17 tests run there (the hosted demo's Cloudflare check skips 4 on CI runners)
 - [x] Grow the baseline suite to 17 tests: checkout, register, filters, contact form, API (in-stock product picked via API, not hard-coded)
 
 ## Phase 1: AI for testing (Weeks 2–5)
