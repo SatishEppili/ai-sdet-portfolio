@@ -1,19 +1,19 @@
-import { test, expect, creds } from '../../src/fixtures/test';
+import { test, expect } from '../../src/fixtures/test';
 
 test.describe('Checkout', () => {
-  test.beforeEach(async ({ page, loginPage, productPage, inStockProduct }) => {
+  test.beforeEach(async ({ loginPage, homePage, productPage, inStockProduct, customer }) => {
     await loginPage.open();
-    await loginPage.login(creds.email, creds.password);
-    await expect(page).toHaveURL(/\/account$/);
+    await loginPage.loginAsCustomer(customer.email, customer.password);
 
-    await productPage.open(inStockProduct.id);
+    // Navigate like a shopper (home -> search -> product -> cart) rather than deep-linking.
+    await homePage.open();
+    await homePage.findAndOpenProduct(inStockProduct.name);
     await productPage.add(2);
     await expect(productPage.cartQuantity).toHaveText('2');
+    await homePage.openCart();
   });
 
   test('cart shows the right line price and total', async ({ checkoutPage, inStockProduct }) => {
-    await checkoutPage.open();
-
     await expect(checkoutPage.productTitles.first()).toHaveText(inStockProduct.name);
     await expect(checkoutPage.productQuantity.first()).toHaveValue('2');
     const expected = `$${(inStockProduct.price * 2).toFixed(2)}`;
@@ -22,7 +22,6 @@ test.describe('Checkout', () => {
   });
 
   test('signed-in customer can complete checkout with cash on delivery', async ({ checkoutPage }) => {
-    await checkoutPage.open();
     await checkoutPage.proceedFromCart();
     await checkoutPage.proceedAsSignedIn();
     await checkoutPage.fillAddress({

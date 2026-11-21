@@ -11,7 +11,7 @@ export class HomePage extends BasePage {
 
   async open() {
     await this.goto('/');
-    await this.productNames.first().waitFor();
+    await this.ready(this.productNames.first());
   }
 
   async search(term: string) {
@@ -37,6 +37,17 @@ export class HomePage extends BasePage {
     // Exact match: "Pliers" must not match "Combination Pliers".
     const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     await this.productNames.filter({ hasText: new RegExp(`^\\s*${escaped}\\s*$`) }).first().click();
+  }
+
+  /** Finds a product the way a shopper would (search, then click) instead of deep-linking to it. */
+  async findAndOpenProduct(name: string) {
+    await this.search(name);
+    await this.openProduct(name);
+  }
+
+  /** Opens the cart from the header, staying inside the single-page app. */
+  async openCart() {
+    await this.byTestId('nav-cart').click();
   }
 
   async prices(): Promise<number[]> {

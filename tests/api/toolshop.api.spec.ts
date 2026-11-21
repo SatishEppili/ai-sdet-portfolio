@@ -1,19 +1,19 @@
-import { test, expect, creds } from '../../src/fixtures/test';
+import { test, expect } from '../../src/fixtures/test';
 import { API_URL } from '../../src/api/ToolshopApi';
 
 test.describe('Toolshop REST API', () => {
-  test('login returns a token that identifies the customer', async ({ request, api }) => {
-    const token = await api.login(creds.email, creds.password);
+  test('login returns a token that identifies the customer', async ({ request, api, customer }) => {
+    const token = await api.login(customer.email, customer.password);
     expect(token).toMatch(/^[\w-]+\.[\w-]+\.[\w-]+$/); // JWT shape
 
     const me = await request.get(`${API_URL}/users/me`, { headers: { Authorization: `Bearer ${token}` } });
     await expect(me).toBeOK();
-    expect((await me.json()).email).toBe(creds.email);
+    expect((await me.json()).email).toBe(customer.email);
   });
 
-  test('login with a wrong password is rejected with 401', async ({ request }) => {
+  test('login with a wrong password is rejected with 401', async ({ request, customer }) => {
     const res = await request.post(`${API_URL}/users/login`, {
-      data: { email: creds.email, password: 'wrong-password' },
+      data: { email: customer.email, password: 'wrong-password' },
     });
     expect(res.status()).toBe(401);
   });

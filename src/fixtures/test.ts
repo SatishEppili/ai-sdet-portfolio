@@ -1,5 +1,5 @@
 import { test as base, expect } from '@playwright/test';
-import { ToolshopApi, type Product } from '../api/ToolshopApi';
+import { ToolshopApi, type Customer, type Product } from '../api/ToolshopApi';
 import { CheckoutPage } from '../pages/CheckoutPage';
 import { ContactPage } from '../pages/ContactPage';
 import { HomePage } from '../pages/HomePage';
@@ -17,6 +17,8 @@ type Fixtures = {
   api: ToolshopApi;
   /** A product that is in stock right now (looked up via the API, never hard-coded). */
   inStockProduct: Product;
+  /** A freshly registered customer owned by this test (never the shared demo account). */
+  customer: Customer;
 };
 
 /** Single entry point for tests. AI fixtures (self-healing, triage hooks) get added here later. */
@@ -29,15 +31,11 @@ export const test = base.extend<Fixtures>({
   checkoutPage: async ({ page }, use) => use(new CheckoutPage(page)),
   api: async ({ request }, use) => use(new ToolshopApi(request)),
   inStockProduct: async ({ api }, use) => use(await api.inStockProduct()),
+  customer: async ({ api }, use) => use(await api.registerCustomer()),
 });
 
 export { expect };
 
-export const creds = {
-  email: process.env.TOOLSHOP_EMAIL ?? 'customer@practicesoftwaretesting.com',
-  password: process.env.TOOLSHOP_PASSWORD ?? 'welcome01',
-};
-
-/** Unique per run + worker so parallel/CI runs never collide on shared data. */
+/** Unique per call so parallel/CI runs never collide on shared data. */
 export const uniqueEmail = (prefix = 'qa') =>
   `${prefix}+${Date.now()}${Math.floor(Math.random() * 1e4)}@example.com`;

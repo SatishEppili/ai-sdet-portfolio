@@ -9,7 +9,7 @@ export class ProductPage extends BasePage {
 
   async open(productId: string) {
     await this.goto(`/product/${productId}`);
-    await this.name.waitFor();
+    await this.ready(this.name);
   }
 
   async add(qty = 1) {

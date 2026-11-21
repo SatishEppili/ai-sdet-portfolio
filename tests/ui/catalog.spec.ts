@@ -45,8 +45,8 @@ test.describe('Product catalog', () => {
       .toBe(true);
   });
 
-  test('customer can add an in-stock product to the cart', async ({ productPage, inStockProduct }) => {
-    await productPage.open(inStockProduct.id);
+  test('customer can add an in-stock product to the cart', async ({ homePage, productPage, inStockProduct }) => {
+    await homePage.findAndOpenProduct(inStockProduct.name);
     await expect(productPage.name).toHaveText(inStockProduct.name);
 
     await productPage.add(2);
