@@ -1,0 +1,36 @@
+# Local test lab.  Start: npm run lab:up   Stop: npm run lab:down
+# The Toolshop app is used from its public host (practicesoftwaretesting.com) for now;
+# it can be self-hosted later from https://github.com/testsmith-io/practice-software-testing
+
+name: ai-sdet-lab
+
+services:
+  # Local LLM runtime (free). After start: docker exec -it ollama ollama pull llama3.2
+  # Skip this service if you installed the Ollama desktop app instead (same port).
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    ports: ["11434:11434"]
+    volumes: [ollama:/root/.ollama]
+    profiles: [ollama]
+
+  # ChatGPT-style UI on top of Ollama -> AI app under test (Projects 4, 5, 6)
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: open-webui
+    ports: ["3000:8080"]
+    environment:
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434
+      - WEBUI_AUTH=False
+    extra_hosts: ["host.docker.internal:host-gateway"]
+    volumes: [open-webui:/app/backend/data]
+
+  # Intentionally vulnerable web app -> exploratory agent + security tests (Project 7)
+  juice-shop:
+    image: bkimminich/juice-shop:latest
+    container_name: juice-shop
+    ports: ["3001:3000"]
+
+volumes:
+  ollama:
+  open-webui:
