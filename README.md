@@ -1,5 +1,6 @@
 # AI SDET Portfolio
-n[![CI](https://github.com/SatishEppili/ai-sdet-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/SatishEppili/ai-sdet-portfolio/actions/workflows/ci.yml)
+
+[![CI](https://github.com/SatishEppili/ai-sdet-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/SatishEppili/ai-sdet-portfolio/actions/workflows/ci.yml)
 
 AI-powered test automation built on **Playwright + TypeScript**, covering two areas:
 
