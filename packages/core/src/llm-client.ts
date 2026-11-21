@@ -97,18 +97,23 @@ class GeminiProvider implements LlmProvider {
 class GroqProvider implements LlmProvider {
   readonly name = 'groq';
   constructor(
-    readonly model = process.env.GROQ_MODEL ?? 'llama-3.3-70b-versatile',
+    // llama-3.3-70b-versatile was retired on the free tier (Aug 2026); see console.groq.com/docs/models.
+    readonly model = process.env.GROQ_MODEL ?? 'openai/gpt-oss-120b',
     private apiKey = requireEnv('GROQ_API_KEY'),
   ) {}
 
   async chat(messages: ChatMessage[], opts: ChatOptions = {}): Promise<string> {
+    // gpt-oss models reason before answering, and reasoning tokens count towards max_tokens:
+    // keep reasoning short and leave room for the actual answer.
+    const reasoning = this.model.startsWith('openai/gpt-oss');
     const body = await postJson(
       'https://api.groq.com/openai/v1/chat/completions',
       {
         model: this.model,
         messages,
         temperature: opts.temperature ?? 0,
-        max_tokens: opts.maxTokens,
+        max_tokens: reasoning && opts.maxTokens ? Math.max(opts.maxTokens, 4096) : opts.maxTokens,
+        ...(reasoning ? { reasoning_effort: 'low' } : {}),
         ...(opts.json ? { response_format: { type: 'json_object' } } : {}),
       },
       { Authorization: `Bearer ${this.apiKey}` },
