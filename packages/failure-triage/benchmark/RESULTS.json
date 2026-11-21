@@ -1,0 +1,536 @@
+[
+  {
+    "title": "Toolshop › #01 product grid shows product names",
+    "expected": "test-bug",
+    "baseline": "test-bug",
+    "verdict": {
+      "id": "88428fbf7f43448c2b03-e9b81075f2a15ac0941f",
+      "title": "Toolshop › #01 product grid shows product names",
+      "location": "packages/failure-triage/benchmark/seeded/suite-a.spec.ts:16",
+      "signals": [],
+      "expected": "test-bug",
+      "category": "test-bug",
+      "confidence": 0.8,
+      "summary": "Locator typo or stale locator",
+      "rootCause": "The locator 'product-nme' is likely incorrect or outdated, as it matches multiple elements and is not specific enough. The page snapshot shows multiple elements with the same text 'product-nme', indicating a potential issue with the locator.",
+      "suggestedFix": "Update the locator to match a unique element on the page, such as 'product-name' or 'product-title'. Verify that the locator is correct and consistent across the application.",
+      "evidence": [],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 40912
+    }
+  },
+  {
+    "title": "Toolshop › #02 opening the first product",
+    "expected": "test-bug",
+    "baseline": "test-bug",
+    "verdict": {
+      "id": "88428fbf7f43448c2b03-56e7d39719e49ea0a71b",
+      "title": "Toolshop › #02 opening the first product",
+      "location": "packages/failure-triage/benchmark/seeded/suite-a.spec.ts:21",
+      "signals": [
+        {
+          "hint": "test-bug",
+          "weight": 0.8,
+          "reason": "Strict-mode violation: the locator matches several elements"
+        }
+      ],
+      "expected": "test-bug",
+      "category": "test-bug",
+      "confidence": 0.8,
+      "summary": "Strict-mode violation: locator matches multiple elements",
+      "rootCause": "The locator 'getByTestId('product-name')' is too broad and matches multiple elements, causing the test to fail. This is a test-bug as the test is correct and the environment is healthy.",
+      "suggestedFix": "Use a more specific locator, such as 'getByTestId('product-01M7Z6GXAWBGFE7M6H2ZRC3D42')', to target the specific product element.",
+      "evidence": [],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 44082
+    }
+  },
+  {
+    "title": "Toolshop › #03 home page has the right title",
+    "expected": "test-bug",
+    "baseline": "test-bug",
+    "verdict": {
+      "id": "88428fbf7f43448c2b03-78796b656fb07d55f2ac",
+      "title": "Toolshop › #03 home page has the right title",
+      "location": "packages/failure-triage/benchmark/seeded/suite-a.spec.ts:27",
+      "signals": [],
+      "expected": "test-bug",
+      "category": "product-bug",
+      "confidence": 0.8,
+      "summary": "Expected title 'Toolshop - Home' not found",
+      "rootCause": "The application returns a title with 'Practice Software Testing - Toolshop - v5.0' instead of the expected 'Toolshop - Home'. This suggests a bug in the application's title rendering.",
+      "suggestedFix": "Verify that the application's title is correctly set and updated. Check for any typos or formatting issues in the title string.",
+      "evidence": [
+        "Expected: 'Toolshop - Home', Received: 'Practice Software Testing - Toolshop - v5.0'"
+      ],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 53737
+    }
+  },
+  {
+    "title": "Toolshop › #04 search filters the grid",
+    "expected": "test-bug",
+    "baseline": "test-bug",
+    "verdict": {
+      "id": "88428fbf7f43448c2b03-2ca57cd52f7e582de003",
+      "title": "Toolshop › #04 search filters the grid",
+      "location": "packages/failure-triage/benchmark/seeded/suite-a.spec.ts:35",
+      "signals": [],
+      "expected": "test-bug",
+      "category": "product-bug",
+      "confidence": 0.8,
+      "summary": "Search filters not working as expected",
+      "rootCause": "The search filters are not working correctly, as the test expects all products to match the 'pliers' filter, but none are found.",
+      "suggestedFix": "Check the product data and ensure that all products have the 'pliers' category, or update the filter logic to match the actual data.",
+      "evidence": [
+        "expect(names.every((n) => /pliers/i.test(n))).toBe(true)",
+        "Expected: true, Received: false"
+      ],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 45777
+    }
+  },
+  {
+    "title": "Toolshop › #05 customer can log in",
+    "expected": "test-bug",
+    "baseline": "test-bug",
+    "verdict": {
+      "id": "88428fbf7f43448c2b03-0c2b0dabc72558116292",
+      "title": "Toolshop › #05 customer can log in",
+      "location": "packages/failure-triage/benchmark/seeded/suite-a.spec.ts:41",
+      "signals": [],
+      "expected": "test-bug",
+      "category": "environment",
+      "confidence": 0.8,
+      "summary": "HTTP error indicates authentication issue",
+      "rootCause": "The application returned a 401 Unauthorized error, indicating authentication issues, despite the test expecting a specific URL.",
+      "suggestedFix": "Verify API authentication credentials and ensure correct setup",
+      "evidence": [
+        "HTTP error: 401 Unauthorized",
+        "POST https://api.practicesoftwaretesting.com/users/login"
+      ],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 30586
+    }
+  },
+  {
+    "title": "Toolshop › #06 sort by price low to high",
+    "expected": "product-bug",
+    "baseline": "test-bug",
+    "verdict": {
+      "id": "fbdde9177f9b150c5ddc-edec5e3dfee36ceb0c65",
+      "title": "Toolshop › #06 sort by price low to high",
+      "location": "packages/failure-triage/benchmark/seeded/suite-b.spec.ts:42",
+      "signals": [],
+      "expected": "product-bug",
+      "category": "product-bug",
+      "confidence": 0.9,
+      "summary": "sort by price low to high returns same price",
+      "rootCause": "The test is expecting the prices to be sorted in ascending order, but the received prices are the same, indicating a bug in the application's sorting logic.",
+      "suggestedFix": "Check the homePage.prices() method to ensure it's correctly sorting the prices and update the test to expect the prices in ascending order.",
+      "evidence": [
+        "expect(prices).toEqual([...prices].sort((a, b) => a - b))",
+        "Array [ ... ]"
+      ],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 43708
+    }
+  },
+  {
+    "title": "Toolshop › #07 search returns only matching products",
+    "expected": "product-bug",
+    "baseline": "test-bug",
+    "verdict": {
+      "id": "fbdde9177f9b150c5ddc-7616dd08e0ffad4c4ab8",
+      "title": "Toolshop › #07 search returns only matching products",
+      "location": "packages/failure-triage/benchmark/seeded/suite-b.spec.ts:55",
+      "signals": [],
+      "expected": "product-bug",
+      "category": "product-bug",
+      "confidence": 0.8,
+      "summary": "Search returns only matching products with 'pliers' in name",
+      "rootCause": "The application is filtering out products without 'pliers' in their name, despite the test expecting all visible product names to contain 'pliers'. This suggests a bug in the application's search logic.",
+      "suggestedFix": "Review the application's search logic to ensure it is correctly filtering products by name, and update the test to expect all visible product names to contain 'pliers'.",
+      "evidence": [
+        "Error: every visible product name should contain 'pliers'",
+        "Expected: true, Received: false"
+      ],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 44857
+    }
+  },
+  {
+    "title": "Toolshop › #08 every listed product has a positive price",
+    "expected": "product-bug",
+    "baseline": "test-bug",
+    "verdict": {
+      "id": "fbdde9177f9b150c5ddc-6de0c55fa083d10cdb62",
+      "title": "Toolshop › #08 every listed product has a positive price",
+      "location": "packages/failure-triage/benchmark/seeded/suite-b.spec.ts:60",
+      "signals": [],
+      "expected": "product-bug",
+      "category": "product-bug",
+      "confidence": 0.9,
+      "summary": "Price is expected to be greater than 0 but is 0",
+      "rootCause": "The application is returning a price of 0 for at least one product, indicating a bug in the application's pricing logic.",
+      "suggestedFix": "Verify that the application's pricing logic is correct and that the price is being set correctly for each product. Check for any typos or incorrect assumptions in the test code.",
+      "evidence": [
+        "Expected: > 0",
+        "Received:   0"
+      ],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 41772
+    }
+  },
+  {
+    "title": "Toolshop › #09 a valid contact message is accepted",
+    "expected": "product-bug",
+    "baseline": "product-bug",
+    "verdict": {
+      "id": "fbdde9177f9b150c5ddc-e8e2f554ae22eba38cc0",
+      "title": "Toolshop › #09 a valid contact message is accepted",
+      "location": "packages/failure-triage/benchmark/seeded/suite-b.spec.ts:69",
+      "signals": [
+        {
+          "hint": "product-bug",
+          "weight": 0.45,
+          "reason": "API rejected a request with a 4xx validation error"
+        }
+      ],
+      "expected": "product-bug",
+      "category": "product-bug",
+      "confidence": 0.8,
+      "summary": "API validation error prevents contact message from being accepted",
+      "rootCause": "The API rejected the request with a 422 validation error, indicating that the email address is not valid.",
+      "suggestedFix": "Verify that the email address is valid and update the client-side validation rules to allow for valid email addresses.",
+      "evidence": [
+        "HTTP ERROR: POST https://api.practicesoftwaretesting.com/messages -> 422",
+        "HEURISTIC SIGNALS: product-bug (0.45) - API rejected a request with a 4xx validation error"
+      ],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 41428
+    }
+  },
+  {
+    "title": "Toolshop › #10 registered customer can log in",
+    "expected": "product-bug",
+    "baseline": "product-bug",
+    "verdict": {
+      "id": "fbdde9177f9b150c5ddc-d4fceb24148e7d7c2903",
+      "title": "Toolshop › #10 registered customer can log in",
+      "location": "packages/failure-triage/benchmark/seeded/suite-b.spec.ts:75",
+      "signals": [
+        {
+          "hint": "product-bug",
+          "weight": 0.6,
+          "reason": "Server error (500) raised by application code"
+        }
+      ],
+      "expected": "product-bug",
+      "category": "product-bug",
+      "confidence": 0.8,
+      "summary": "Server error raised by application code",
+      "rootCause": "The application returned a 500 error due to an undefined array key \"role\" in the UserController.php file.",
+      "suggestedFix": "Check the UserController.php file for the undefined array key and ensure it is properly defined and used.",
+      "evidence": [
+        "Server error (500) raised by application code",
+        "Undefined array key \"role\""
+      ],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 31917
+    }
+  },
+  {
+    "title": "Toolshop › #11 home page lists products",
+    "expected": "environment",
+    "baseline": "environment",
+    "verdict": {
+      "id": "880861c4754826e3659e-65420a625a14a2214d36",
+      "title": "Toolshop › #11 home page lists products",
+      "location": "packages/failure-triage/benchmark/seeded/suite-c.spec.ts:38",
+      "signals": [
+        {
+          "hint": "environment",
+          "weight": 0.8,
+          "reason": "Network-level failure (connection refused / DNS / reset)"
+        }
+      ],
+      "expected": "environment",
+      "category": "environment",
+      "confidence": 0.8,
+      "summary": "Network-level failure: connection refused",
+      "rootCause": "The application is unable to connect to the API server, resulting in a connection refused error.",
+      "suggestedFix": "Verify that the API server is running and accessible, and update the test to handle this error scenario.",
+      "evidence": [],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 11306
+    }
+  },
+  {
+    "title": "Toolshop › #12 catalog loads on the home page",
+    "expected": "environment",
+    "baseline": "environment",
+    "verdict": {
+      "id": "880861c4754826e3659e-5a205ef57f02fcf49cc3",
+      "title": "Toolshop › #12 catalog loads on the home page",
+      "location": "packages/failure-triage/benchmark/seeded/suite-c.spec.ts:43",
+      "signals": [
+        {
+          "hint": "environment",
+          "weight": 0.75,
+          "reason": "Gateway / service-unavailable response (502/503/504)"
+        }
+      ],
+      "expected": "environment",
+      "category": "environment",
+      "confidence": 0.75,
+      "summary": "Gateway / service-unavailable response",
+      "rootCause": "The application is returning a 503 Service Unavailable response from the API gateway, indicating a temporary failure of the services.",
+      "suggestedFix": "Verify that the API gateway is functioning correctly and that the services are available. Check for any temporary issues or maintenance windows that may be causing the failure.",
+      "evidence": [],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 15306
+    }
+  },
+  {
+    "title": "Toolshop › #13 opens the staging shop",
+    "expected": "environment",
+    "baseline": "environment",
+    "verdict": {
+      "id": "880861c4754826e3659e-7601b54c4a9a24655ae4",
+      "title": "Toolshop › #13 opens the staging shop",
+      "location": "packages/failure-triage/benchmark/seeded/suite-c.spec.ts:47",
+      "signals": [
+        {
+          "hint": "environment",
+          "weight": 0.8,
+          "reason": "Network-level failure (connection refused / DNS / reset)"
+        }
+      ],
+      "expected": "environment",
+      "category": "environment",
+      "confidence": 0.8,
+      "summary": "Network-level failure on staging URL",
+      "rootCause": "The staging URL is invalid, causing a DNS resolution failure.",
+      "suggestedFix": "Verify the staging URL and update it to the correct domain.",
+      "evidence": [
+        "HEURISTIC SIGNALS: environment (0.8) - Network-level failure (connection refused / DNS / reset)"
+      ],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 18871
+    }
+  },
+  {
+    "title": "Toolshop › #14 landing page shows products",
+    "expected": "environment",
+    "baseline": "environment",
+    "verdict": {
+      "id": "880861c4754826e3659e-c75a134c8778a04f63b1",
+      "title": "Toolshop › #14 landing page shows products",
+      "location": "packages/failure-triage/benchmark/seeded/suite-c.spec.ts:53",
+      "signals": [
+        {
+          "hint": "environment",
+          "weight": 0.85,
+          "reason": "Bot-protection / challenge page served instead of the app"
+        }
+      ],
+      "expected": "environment",
+      "category": "environment",
+      "confidence": 0.85,
+      "summary": "Bot-protection page served instead of app",
+      "rootCause": "The server responded with a status of 403 (Forbidden) due to bot-protection measures, preventing the app from being loaded.",
+      "suggestedFix": "Verify that the bot-protection measures are correctly configured to allow the app to be accessed.",
+      "evidence": [
+        "HTTP ERROR: GET https://practicesoftwaretesting.com/ -> 403",
+        "HEURISTIC SIGNAL: environment (0.85) - Bot-protection / challenge page served instead of the app"
+      ],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 40060
+    }
+  },
+  {
+    "title": "Toolshop › #15 demo customer can log in",
+    "expected": "environment",
+    "baseline": "environment",
+    "verdict": {
+      "id": "880861c4754826e3659e-88fc960cfc84af1feb96",
+      "title": "Toolshop › #15 demo customer can log in",
+      "location": "packages/failure-triage/benchmark/seeded/suite-c.spec.ts:59",
+      "signals": [
+        {
+          "hint": "environment",
+          "weight": 0.6,
+          "reason": "Shared test account locked or rate-limited (423/429)"
+        }
+      ],
+      "expected": "environment",
+      "category": "environment",
+      "confidence": 0.8,
+      "summary": "Shared test account locked or rate-limited",
+      "rootCause": "The shared test account is locked due to too many failed login attempts, as indicated by the HTTP error code 423.",
+      "suggestedFix": "Check the test account status and wait for it to be unlocked or use a different account.",
+      "evidence": [
+        "HTTP error code 423",
+        "Account locked, too many failed attempts. Please contact the administrator."
+      ],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 33448
+    }
+  },
+  {
+    "title": "Toolshop › #16 products appear on the home page",
+    "expected": "flaky",
+    "baseline": "flaky",
+    "verdict": {
+      "id": "4c9bfe931be6b94fcb0c-5831431d693823edbfa6",
+      "title": "Toolshop › #16 products appear on the home page",
+      "location": "packages/failure-triage/benchmark/seeded/suite-d.spec.ts:35",
+      "signals": [
+        {
+          "hint": "flaky",
+          "weight": 0.9,
+          "reason": "Failed, then passed on retry with no code change"
+        }
+      ],
+      "expected": "flaky",
+      "category": "flaky",
+      "confidence": 0.9,
+      "summary": "Failed, then passed on retry with no code change",
+      "rootCause": "The test is flaky due to intermittent issues with the application's visibility of product names. The page snapshot shows a normal page structure, but the test fails occasionally.",
+      "suggestedFix": "Try adding a retry mechanism to the test or increasing the timeout value to see if the test passes consistently.",
+      "evidence": [],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 46266
+    }
+  },
+  {
+    "title": "Toolshop › #17 opening a product from the grid",
+    "expected": "flaky",
+    "baseline": "flaky",
+    "verdict": {
+      "id": "4c9bfe931be6b94fcb0c-2a907c612de21dc42684",
+      "title": "Toolshop › #17 opening a product from the grid",
+      "location": "packages/failure-triage/benchmark/seeded/suite-d.spec.ts:40",
+      "signals": [
+        {
+          "hint": "flaky",
+          "weight": 0.9,
+          "reason": "Failed, then passed on retry with no code change"
+        }
+      ],
+      "expected": "flaky",
+      "category": "flaky",
+      "confidence": 0.9,
+      "summary": "Test fails intermittently, passes on retry without code change",
+      "rootCause": "The test is flaky due to a timing issue with the locator click action, which is resolved after a retry.",
+      "suggestedFix": "Increase the timeout value for the click action to a higher value, such as 6000ms, to prevent the test from timing out.",
+      "evidence": [],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 38514
+    }
+  },
+  {
+    "title": "Toolshop › #18 home page renders the catalog",
+    "expected": "flaky",
+    "baseline": "flaky",
+    "verdict": {
+      "id": "4c9bfe931be6b94fcb0c-f24781a1715ddbfbe14e",
+      "title": "Toolshop › #18 home page renders the catalog",
+      "location": "packages/failure-triage/benchmark/seeded/suite-d.spec.ts:46",
+      "signals": [
+        {
+          "hint": "flaky",
+          "weight": 0.9,
+          "reason": "Failed, then passed on retry with no code change"
+        },
+        {
+          "hint": "environment",
+          "weight": 0.8,
+          "reason": "Network-level failure (connection refused / DNS / reset)"
+        }
+      ],
+      "expected": "flaky",
+      "category": "flaky",
+      "confidence": 0.9,
+      "summary": "Failed, then passed on retry with no code change",
+      "rootCause": "The test failed due to a network-level failure (connection refused), but passed on retry without any code changes.",
+      "suggestedFix": "Verify that the network connection is stable and retry the test with a shorter timeout to ensure it fails consistently.",
+      "evidence": [],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 46568
+    }
+  },
+  {
+    "title": "Toolshop › #19 searching narrows the results",
+    "expected": "flaky",
+    "baseline": "flaky",
+    "verdict": {
+      "id": "4c9bfe931be6b94fcb0c-46a3875495841532df68",
+      "title": "Toolshop › #19 searching narrows the results",
+      "location": "packages/failure-triage/benchmark/seeded/suite-d.spec.ts:58",
+      "signals": [
+        {
+          "hint": "flaky",
+          "weight": 0.9,
+          "reason": "Failed, then passed on retry with no code change"
+        }
+      ],
+      "expected": "flaky",
+      "category": "flaky",
+      "confidence": 0.9,
+      "summary": "Test fails intermittently, passes on retry without code change",
+      "rootCause": "The test is flaky due to intermittent issues, as indicated by the heuristic signal 'flaky' (0.9) and the fact that it failed, then passed on retry without any code changes.",
+      "suggestedFix": "Review the test code and environment to identify the root cause of the intermittent failures and consider adding more robust error handling or retry mechanisms to improve test reliability.",
+      "evidence": [],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 58624
+    }
+  },
+  {
+    "title": "Toolshop › #20 new customer can sign in",
+    "expected": "flaky",
+    "baseline": "flaky",
+    "verdict": {
+      "id": "4c9bfe931be6b94fcb0c-81316dffee21f0ff9e23",
+      "title": "Toolshop › #20 new customer can sign in",
+      "location": "packages/failure-triage/benchmark/seeded/suite-d.spec.ts:64",
+      "signals": [
+        {
+          "hint": "flaky",
+          "weight": 0.9,
+          "reason": "Failed, then passed on retry with no code change"
+        }
+      ],
+      "expected": "flaky",
+      "category": "flaky",
+      "confidence": 0.9,
+      "summary": "Test fails intermittently, passes on retry without code change",
+      "rootCause": "The test is flaky due to intermittent issues, as evidenced by the failed test taking 10421ms and passing on retry without any changes to the test code.",
+      "suggestedFix": "Review the test code and environment to identify the root cause of the intermittent failures and make necessary adjustments to improve test reliability.",
+      "evidence": [],
+      "source": "llm",
+      "model": "ollama",
+      "latencyMs": 31696
+    }
+  }
+]
