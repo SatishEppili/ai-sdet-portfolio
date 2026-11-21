@@ -6,7 +6,7 @@ test.describe('Authentication', () => {
     await loginPage.loginAsCustomer(customer.email, customer.password);
 
     await expect(page).toHaveURL(/\/account$/);
-    await expect(loginPage.accountTitle).toHaveText('My account');
+    await expect(loginPage.accountTitle).toHaveText('My Account');
     await expect(homePage.navMenu).toContainText(`${customer.firstName} ${customer.lastName}`);
   });
 
