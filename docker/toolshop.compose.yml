@@ -1,0 +1,46 @@
+# Self-hosted Toolshop (practicesoftwaretesting.com) for hermetic test runs.
+# Based on docker-compose.prod.yml from https://github.com/testsmith-io/practice-software-testing
+# Images are pinned so CI is reproducible; bump TOOLSHOP_VERSION deliberately.
+#
+#   npm run toolshop:up     # start + seed, then waits until UI and API are ready
+#   npm run toolshop:down
+#
+# UI:  http://localhost:4200   API: http://localhost:8091
+
+name: toolshop
+
+services:
+  laravel-api:
+    image: testsmith/practice-software-testing-sprint5-api:${TOOLSHOP_VERSION:-2.5}
+    environment:
+      - PHP_OPCACHE_VALIDATE_TIMESTAMPS=1
+      - DB_PORT=3306
+      - DB_HOST=mariadb
+      - host=localhost
+      - DISABLE_LOGGING=true
+    volumes:
+      - laravel-app-code:/var/www
+    depends_on:
+      - mariadb
+
+  angular-ui:
+    image: testsmith/practice-software-testing-sprint5-ui:${TOOLSHOP_VERSION:-2.5}
+    ports: ["4200:4200"]
+    command: bash -c "ng serve --host 0.0.0.0 --port 4200"
+
+  web:
+    image: testsmith/practice-software-testing-web:latest
+    ports: ["8091:80"]
+    depends_on:
+      - laravel-api
+
+  mariadb:
+    image: yobasystems/alpine-mariadb:10.6.11
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: user
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: toolshop
+
+volumes:
+  laravel-app-code:
