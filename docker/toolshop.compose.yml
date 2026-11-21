@@ -28,9 +28,15 @@ services:
     ports: ["4200:4200"]
     command: bash -c "ng serve --host 0.0.0.0 --port 4200"
 
+  # The published web image is arm64-only, so build it (nginx + vhost.conf) from the
+  # upstream repo at a pinned commit; this works on amd64 CI runners and Apple Silicon.
   web:
-    image: testsmith/practice-software-testing-web:latest
+    build:
+      context: https://github.com/testsmith-io/practice-software-testing.git#ae7caecb811dd8952c09d997e69be7cb946ecd44:_docker
+      dockerfile: web.docker
     ports: ["8091:80"]
+    volumes:
+      - laravel-app-code:/var/www:ro
     depends_on:
       - laravel-api
 

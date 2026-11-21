@@ -21,7 +21,7 @@ jobs:
 
       # Pull images in the background while Node and the browser install.
       - name: Pull Toolshop images
-        run: docker compose -f docker/toolshop.compose.yml pull --quiet &
+        run: docker compose -f docker/toolshop.compose.yml pull --quiet --ignore-buildable &
 
       - uses: actions/setup-node@v5
         with:

@@ -16,7 +16,7 @@ wait_for() { # name, max attempts, sleep seconds, command...
   echo "✗ $name not ready in time"; $COMPOSE logs --tail=80; return 1
 }
 
-$COMPOSE up -d --quiet-pull
+$COMPOSE up -d --build --quiet-pull
 
 wait_for "database" 45 2 $COMPOSE exec -T mariadb mysqladmin ping -h localhost -u root -proot --silent
 
