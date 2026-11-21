@@ -12,7 +12,9 @@
     "typecheck": "tsc --noEmit",
     "llm:ping": "tsx scripts/llm-ping.ts",
     "lab:up": "docker compose -f docker/docker-compose.yml up -d",
-    "lab:down": "docker compose -f docker/docker-compose.yml down"
+    "lab:down": "docker compose -f docker/docker-compose.yml down",
+    "toolshop:up": "bash scripts/toolshop-up.sh",
+    "toolshop:down": "docker compose -f docker/toolshop.compose.yml down -v"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",

@@ -56,7 +56,8 @@ npm run lab:up                # start the Docker test lab (optional)
 ### Test lab
 | Service | URL | Used by |
 |---|---|---|
-| Toolshop (hosted) | https://practicesoftwaretesting.com | UI suite, self-healing, triage, explorer |
+| Toolshop (hosted) | https://practicesoftwaretesting.com | Default for local runs |
+| Toolshop (Docker) | http://localhost:4200 (API :8091) | CI: `npm run toolshop:up`, then `BASE_URL=http://localhost:4200 API_URL=http://localhost:8091 npm test` |
 | Open WebUI | http://localhost:3000 | LLM eval, red-teaming |
 | Juice Shop | http://localhost:3001 | Explorer agent, security |
 
