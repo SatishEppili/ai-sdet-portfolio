@@ -6,6 +6,10 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  pull-requests: write # sticky triage comment on PRs
+
 jobs:
   e2e:
     name: UI + API tests (self-hosted Toolshop)
@@ -35,7 +39,25 @@ jobs:
         run: bash scripts/toolshop-up.sh
 
       - name: Run Playwright tests
+        id: tests
         run: npx playwright test
+
+      # Runs whenever the tests ran (also catches flaky tests on a green run).
+      # Uses Groq if the GROQ_API_KEY secret is set, otherwise signals-only heuristics.
+      - name: AI failure triage
+        id: triage
+        if: ${{ !cancelled() && steps.tests.outcome != 'skipped' }}
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          LLM_PROVIDER: ${{ secrets.GROQ_API_KEY != '' && 'groq' || 'none' }}
+        run: npm run triage -- --out triage-report.md
+
+      - name: Comment triage on the PR
+        if: ${{ !cancelled() && github.event_name == 'pull_request' && steps.triage.outputs.failures != '' && steps.triage.outputs.failures != '0' }}
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: ai-failure-triage
+          path: triage-report.md
 
       - name: Toolshop logs (on failure)
         if: failure()
@@ -48,5 +70,5 @@ jobs:
           path: |
             playwright-report/
             test-results/
+            triage-report.*
           retention-days: 14
-      # Project 2 adds an "AI failure triage" step here that reads test-results/results.json

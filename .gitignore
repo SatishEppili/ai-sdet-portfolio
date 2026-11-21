@@ -8,3 +8,4 @@ playwright/.cache/
 heal-log*.json
 triage-report*.md
 .vscode/
+test-results-seeded/

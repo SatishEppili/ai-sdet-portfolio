@@ -14,7 +14,10 @@
     "lab:up": "docker compose -f docker/docker-compose.yml up -d",
     "lab:down": "docker compose -f docker/docker-compose.yml down",
     "toolshop:up": "bash scripts/toolshop-up.sh",
-    "toolshop:down": "docker compose -f docker/toolshop.compose.yml down -v"
+    "toolshop:down": "docker compose -f docker/toolshop.compose.yml down -v",
+    "triage": "tsx packages/failure-triage/src/cli.ts",
+    "triage:seed": "playwright test -c packages/failure-triage/benchmark/playwright.config.ts || exit 0",
+    "triage:bench": "tsx packages/failure-triage/src/bench.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",

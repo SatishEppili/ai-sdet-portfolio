@@ -16,10 +16,11 @@
 
 ## Phase 1: AI for testing (Weeks 2–5)
 ### Project 2: AI failure triage bot (`packages/failure-triage`)
-- [ ] Reader for `test-results/results.json` (errors, steps, attachments)
-- [ ] LLM classifier: product bug / flaky / environment / test bug + root cause + fix
-- [ ] Markdown report + PR comment from CI (+ optional Slack webhook)
-- [ ] Seeded-failure benchmark (20 cases), accuracy in the README
+- [x] Reader for `test-results/results.json` (errors, snippets, page snapshots, network/console diagnostics)
+- [x] LLM classifier: product bug / flaky / environment / test bug + root cause + fix (signals fallback)
+- [x] Markdown report + job summary + sticky PR comment from CI (Slack webhook: later)
+- [x] Seeded-failure benchmark (20 cases): 85% with local llama3.2, product bugs 5/5 vs 2/5 for rules
+- [ ] Add git-diff-since-last-green context to fix test-bug vs product-bug confusion
 
 ### Project 1: Self-healing locators (`packages/self-healing`)
 - [ ] Fixture that wraps locators and catches resolution failures

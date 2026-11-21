@@ -48,7 +48,13 @@ class OllamaProvider implements LlmProvider {
         messages,
         stream: false,
         ...(opts.json ? { format: 'json' } : {}),
-        options: { temperature: opts.temperature ?? 0, num_predict: opts.maxTokens },
+        options: {
+          temperature: opts.temperature ?? 0,
+          num_predict: opts.maxTokens,
+          // Ollama's default window can be small and silently truncates long prompts
+          // (system prompt first). Triage prompts with page snapshots need more room.
+          num_ctx: Number(process.env.OLLAMA_NUM_CTX ?? 8192),
+        },
       },
       {},
       opts.timeoutMs,
