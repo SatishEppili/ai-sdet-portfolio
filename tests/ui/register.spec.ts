@@ -30,6 +30,7 @@ test.describe('Customer registration', () => {
       password: 'Sup3r$ecure!Pass2026',
     });
 
+    await registerPage.waitForLoginRedirect();
     await expect(page).toHaveURL(/\/auth\/login$/);
   });
 });

@@ -42,4 +42,9 @@ export class RegisterPage extends BasePage {
     await this.byTestId('password').fill(c.password);
     await this.submit.click();
   }
+
+  /** After a successful registration the app redirects to the login form. */
+  async waitForLoginRedirect() {
+    await this.ready(this.byTestId('login-submit'));
+  }
 }
