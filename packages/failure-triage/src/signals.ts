@@ -2,6 +2,7 @@
  * Cheap, deterministic heuristics. They are given to the LLM as hints and used on their
  * own when no model is available, so the bot degrades gracefully instead of failing CI.
  */
+import type { RelevantChange } from './change-context';
 import type { Category, FailureRecord, Signal } from './types';
 
 interface Rule {
@@ -52,9 +53,17 @@ const RULES: Rule[] = [
   },
 ];
 
-export function extractSignals(f: FailureRecord): Signal[] {
+export function extractSignals(f: FailureRecord, change?: RelevantChange): Signal[] {
   const text = [f.error.message, f.pageSnapshot ?? '', JSON.stringify(f.diagnostics ?? {})].join('\n');
-  return RULES.filter((r) => r.test(f, text)).map(({ hint, weight, reason }) => ({ hint, weight, reason }));
+  const signals = RULES.filter((r) => r.test(f, text)).map(({ hint, weight, reason }) => ({ hint, weight, reason }));
+
+  // Below the network/challenge rules (0.8+) on purpose: a changed test can still hit a real outage.
+  if (change?.specChanged && f.outcome === 'unexpected') {
+    signals.push({ hint: 'test-bug', weight: 0.75, reason: "The failing test's own file was changed in this PR/push" });
+  } else if (change && !change.testCode.length && change.otherCode.length && f.outcome === 'unexpected') {
+    signals.push({ hint: 'product-bug', weight: 0.5, reason: 'Only non-test code changed in this PR/push' });
+  }
+  return signals;
 }
 
 /** Best guess from signals alone (used as the fallback and as the "no-LLM" benchmark baseline). */

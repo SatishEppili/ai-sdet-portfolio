@@ -1,4 +1,5 @@
 import { LlmClient, type ChatMessage } from '../../core/src/llm-client';
+import { relevantChanges, type ChangeContext, type RelevantChange } from './change-context';
 import { extractSignals, heuristicCategory } from './signals';
 import { CATEGORIES, type Category, type FailureRecord, type Triage } from './types';
 
@@ -22,6 +23,14 @@ diagnostics (failed requests, HTTP errors with bodies, console errors). Heuristi
 hints, not answers. A locator timing out is a test-bug only if the page loaded normally; if the
 page shows an error, a challenge page or no data because requests failed, look at why.
 
+If a CHANGE SET is given (what this PR/push changed), use it the way a reviewer would:
+- The failing assertion's expected value or locator was edited in this change set, and the page
+  shows the old value -> almost certainly "test-bug": the test changed, the app did not.
+- Only non-test code changed (e.g. the application) -> a mismatch the test catches is more likely "product-bug".
+- Nothing related changed -> the cause is in the app, the environment, or flakiness, not new test code.
+The change set is strong evidence but not proof: network errors and challenge pages are still
+"environment" even if test files changed.
+
 Reply with ONLY a JSON object:
 {"category": "product-bug|environment|test-bug|flaky",
  "confidence": 0.0-1.0,
@@ -30,7 +39,21 @@ Reply with ONLY a JSON object:
  "suggestedFix": "1-2 concrete sentences: what to change and where",
  "evidence": ["short quotes or facts from the record that support the verdict"]}`;
 
-function describe(f: FailureRecord, signals: ReturnType<typeof extractSignals>): string {
+function describeChange(c: RelevantChange): string {
+  const list = (xs: string[]) => (xs.length ? xs.slice(0, 15).join(', ') : 'none');
+  return [
+    'CHANGE SET (this PR/push vs its base):',
+    `- The failing test's own file ${c.specChanged ? 'WAS CHANGED' : 'was not changed'}.`,
+    `- Test code changed: ${list(c.testCode)}`,
+    `- Non-test code changed (application or tooling): ${list(c.otherCode)}`,
+    `- CI/config changed: ${list(c.ciConfig)}`,
+    c.diff && `DIFF OF TEST CODE:\n${c.diff}`,
+  ]
+    .filter(Boolean)
+    .join('\n');
+}
+
+function describe(f: FailureRecord, signals: ReturnType<typeof extractSignals>, change?: RelevantChange): string {
   const d = f.diagnostics;
   return [
     `TEST: ${f.title}`,
@@ -43,6 +66,7 @@ function describe(f: FailureRecord, signals: ReturnType<typeof extractSignals>):
     d?.httpErrors.length && `HTTP ERRORS:\n${d.httpErrors.map((e) => `- ${e.method} ${e.url} -> ${e.status} ${e.body ?? ''}`).join('\n')}`,
     d?.consoleErrors.length && `CONSOLE ERRORS:\n${d.consoleErrors.slice(0, 8).map((c) => `- ${c}`).join('\n')}`,
     f.pageSnapshot && `PAGE SNAPSHOT (accessibility tree at failure):\n${f.pageSnapshot}`,
+    change ? describeChange(change) : 'CHANGE SET: not available',
     `HEURISTIC SIGNALS: ${signals.length ? signals.map((s) => `${s.hint} (${s.weight}) - ${s.reason}`).join('; ') : 'none'}`,
   ]
     .filter(Boolean)
@@ -60,8 +84,9 @@ function isValid(v: Partial<LlmVerdict> | null | undefined): v is LlmVerdict {
 export class FailureClassifier {
   constructor(private llm: LlmClient | null = new LlmClient()) {}
 
-  async classify(f: FailureRecord): Promise<Triage> {
-    const signals = extractSignals(f);
+  async classify(f: FailureRecord, ctx?: ChangeContext): Promise<Triage> {
+    const change = ctx ? relevantChanges(ctx, f) : undefined;
+    const signals = extractSignals(f, change);
     const base = {
       id: f.id, title: f.title, location: f.error.location ?? `${f.file}:${f.line}`, signals, expected: f.expected,
     };
@@ -69,7 +94,7 @@ export class FailureClassifier {
     if (this.llm) {
       const messages: ChatMessage[] = [
         { role: 'system', content: SYSTEM },
-        { role: 'user', content: describe(f, signals) },
+        { role: 'user', content: describe(f, signals, change) },
       ];
       for (let attempt = 1; attempt <= 2; attempt++) {
         try {
