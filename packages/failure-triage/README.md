@@ -28,14 +28,30 @@ results.json ──► reader ──► signals ──► LLM classifier ──�
 3. **Signals** ([signals.ts](src/signals.ts)) are deterministic rules (passed on retry → flaky,
    connection refused → environment, strict-mode violation → test bug…). They are hints for the
    model and the fallback when no model is reachable.
-4. **Classifier** ([classifier.ts](src/classifier.ts)) asks the LLM for a JSON verdict, validates
-   it, retries once, then falls back to signals. Triage never fails the pipeline.
+4. **Change context** ([change-context.ts](src/change-context.ts)) diffs the PR against its base:
+   which files changed (test code, CI/config, other code), plus the diff of the failing spec and
+   its page objects. A reviewer's first question is "did we change the test, or did the app
+   change?". The failure alone can't answer it; the diff can.
+5. **Classifier** ([classifier.ts](src/classifier.ts)) asks the LLM for a JSON verdict (a strict
+   JSON schema on Groq, so the output is always valid), validates it, retries once, then falls
+   back to signals. Triage never fails the pipeline.
+
+### Example: what the diff changes
+
+[Demo PR #3](https://github.com/SatishEppili/ai-sdet-portfolio/pull/3) edits an assertion to
+expect `"My Account"`; the app renders `"My account"`.
+
+| | Verdict |
+|---|---|
+| Failure only | 🐞 product-bug, 92%: "the application renders the heading as 'My account'…" |
+| Failure + PR diff | 🧪 **test-bug, 92%**: "the test was updated to expect 'My Account'…" (evidence: *"Diff shows test changed from 'My account' to 'My Account'"*) |
 
 ## Usage
 
 ```bash
 npm test                       # produces test-results/results.json
 npm run triage                 # -> triage-report.md + triage-report.json
+npm run triage -- --base origin/main   # also use the diff against main
 npm run triage -- --no-llm     # signals only
 ```
 
@@ -55,25 +71,37 @@ npm run triage:seed    # run the 20 seeded tests (they fail on purpose)
 npm run triage:bench   # score LLM vs signals-only baseline -> benchmark/RESULTS.md
 ```
 
-Latest results ([benchmark/RESULTS.md](benchmark/RESULTS.md)), local `llama3.2` 3B on CPU, about 38 s per failure:
+Results with local `llama3.2` 3B on CPU (40–55 s per failure). The benchmark cases have no PR
+diff, so they measure triage from the failure alone. Latest: [benchmark/RESULTS.md](benchmark/RESULTS.md).
 
-| Category | LLM run 1 | LLM run 2 | Signals only |
-|---|---|---|---|
-| product-bug | 4/5 | **5/5** | 2/5 |
-| environment | 5/5 | 5/5 | 5/5 |
-| flaky | 5/5 | 5/5 | 5/5 |
-| test-bug | 1/5 | 2/5 | 5/5 |
-| **Total** | 75% | **85%** | 85% |
+| Category | Run 1 | Run 2 | Run 3 | Run 4 (current) | Signals only |
+|---|---|---|---|---|---|
+| product-bug | 4/5 | **5/5** | 5/5 | **5/5** | 2/5 |
+| environment | 5/5 | 5/5 | 4/5 | 5/5 | 5/5 |
+| flaky | 5/5 | 5/5 | 5/5 | 4/5 | 5/5 |
+| test-bug | 1/5 | 2/5 | 1/5 | 2/5 | 5/5 |
+| **Total** | 75% | **85%** | 75% | **80%** | 85% |
 
-**What changed between runs:** in run 1, 4 of the 5 mistakes cited a `401 Unauthorized` that is
+**Run 1 → 2 (noise in the evidence):** 4 of run 1's 5 mistakes cited a `401 Unauthorized` that is
 normal for this app (it checks the session of a logged-out visitor on every page). The reader now
 filters known-benign responses ([`BENIGN_HTTP`](src/reader.ts)) before the model sees them.
 
-**What's still hard:** the remaining misses are test bugs that look like product bugs from the
-evidence alone: a wrong expected page title, a test that reads results before the search finishes,
-and hard-coded credentials for a user that doesn't exist. Telling these apart needs context the
-failure doesn't carry, such as whether the test or the app changed since the last green run.
-That's the next improvement: feed the git diff since the last passing run into the prompt.
+**Run 3 (a regression the benchmark caught):** adding the PR-diff feature put "how to use a change
+set" rules and a `CHANGE SET: not available` line into every prompt. With no diff present, the 3B
+model read that as "nothing changed, so blame the app" and accuracy fell to 75%, all new misses
+going to product-bug. Fix: the change-set rules and section are added only when a diff exists.
+The no-diff prompt was then verified to be byte-identical to run 2's.
+
+**Run 4 vs run 2 (variance):** same prompt, same evidence, one case differs: #18, a connection
+reset on the first attempt that passed on retry, was called "environment" instead of "flaky".
+A small model on CPU isn't fully deterministic even at temperature 0, so with 20 cases treat
+±1 case (±5%) as noise, and only trust differences larger than that.
+
+**What's still hard from the failure alone:** test bugs that look like product bugs: a wrong
+expected page title, a test that reads results before the search finishes, and hard-coded
+credentials for a user that doesn't exist. **This is what the PR diff fixes in CI:** on
+[demo PR #3](https://github.com/SatishEppili/ai-sdet-portfolio/pull/3) the same kind of failure went
+from "product-bug 92%" to "test-bug 92%" once the bot could see that the PR edited the assertion.
 
 The LLM is the only option that gets product bugs right (5/5 against 2/5); the rules mostly catch
 test bugs by defaulting to that category. It also writes a root cause and a fix for every failure.

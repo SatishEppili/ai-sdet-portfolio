@@ -19,8 +19,9 @@
 - [x] Reader for `test-results/results.json` (errors, snippets, page snapshots, network/console diagnostics)
 - [x] LLM classifier: product bug / flaky / environment / test bug + root cause + fix (signals fallback)
 - [x] Markdown report + job summary + sticky PR comment from CI (Slack webhook: later)
-- [x] Seeded-failure benchmark (20 cases): 85% with local llama3.2, product bugs 5/5 vs 2/5 for rules
-- [ ] Add git-diff-since-last-green context to fix test-bug vs product-bug confusion
+- [x] Seeded-failure benchmark (20 cases): 80–85% with local llama3.2 (run-to-run variance ±1 case), product bugs 5/5 vs 2/5 for rules
+- [x] PR-diff context (git diff vs PR base) to tell test bugs from product bugs: demo PR flipped from product-bug to the correct test-bug
+- [x] Strict JSON schema for Groq verdicts (gpt-oss emitted invalid JSON in json_object mode)
 
 ### Project 1: Self-healing locators (`packages/self-healing`)
 - [ ] Fixture that wraps locators and catches resolution failures

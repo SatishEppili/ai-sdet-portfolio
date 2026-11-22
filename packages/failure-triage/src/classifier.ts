@@ -22,15 +22,7 @@ Weigh the evidence: error message, code snippet, page snapshot (what the user sa
 diagnostics (failed requests, HTTP errors with bodies, console errors). Heuristic signals are
 hints, not answers. A locator timing out is a test-bug only if the page loaded normally; if the
 page shows an error, a challenge page or no data because requests failed, look at why.
-
-If a CHANGE SET is given (what this PR/push changed), use it the way a reviewer would:
-- The failing assertion's expected value or locator was edited in this change set, and the page
-  shows the old value -> almost certainly "test-bug": the test changed, the app did not.
-- Only non-test code changed (e.g. the application) -> a mismatch the test catches is more likely "product-bug".
-- Nothing related changed -> the cause is in the app, the environment, or flakiness, not new test code.
-The change set is strong evidence but not proof: network errors and challenge pages are still
-"environment" even if test files changed.
-
+{{CHANGE_RULES}}
 Reply with ONLY a JSON object:
 {"category": "product-bug|environment|test-bug|flaky",
  "confidence": 0.0-1.0,
@@ -38,6 +30,23 @@ Reply with ONLY a JSON object:
  "rootCause": "1-2 sentences: the most likely cause, citing evidence",
  "suggestedFix": "1-2 concrete sentences: what to change and where",
  "evidence": ["short quotes or facts from the record that support the verdict"]}`;
+
+/**
+ * Only added when a diff is actually available. Benchmark run 3 showed that mentioning change
+ * sets when there are none ("CHANGE SET: not available") pushed a 3B model towards
+ * "product-bug" (85% -> 75%); without a diff the prompt must stay exactly as before.
+ */
+const CHANGE_RULES = `
+A CHANGE SET is given (what this PR/push changed). Use it the way a reviewer would:
+- The failing assertion's expected value or locator was edited in this change set, and the page
+  shows the old value -> almost certainly "test-bug": the test changed, the app did not.
+- Only non-test code changed (e.g. the application) -> a mismatch the test catches is more likely "product-bug".
+- Nothing related changed -> the cause is in the app, the environment, or flakiness, not new test code.
+The change set is strong evidence but not proof: network errors and challenge pages are still
+"environment" even if test files changed.
+`;
+
+const systemPrompt = (withChange: boolean) => SYSTEM.replace('{{CHANGE_RULES}}', withChange ? CHANGE_RULES : '');
 
 function describeChange(c: RelevantChange): string {
   const list = (xs: string[]) => (xs.length ? xs.slice(0, 15).join(', ') : 'none');
@@ -66,7 +75,7 @@ function describe(f: FailureRecord, signals: ReturnType<typeof extractSignals>, 
     d?.httpErrors.length && `HTTP ERRORS:\n${d.httpErrors.map((e) => `- ${e.method} ${e.url} -> ${e.status} ${e.body ?? ''}`).join('\n')}`,
     d?.consoleErrors.length && `CONSOLE ERRORS:\n${d.consoleErrors.slice(0, 8).map((c) => `- ${c}`).join('\n')}`,
     f.pageSnapshot && `PAGE SNAPSHOT (accessibility tree at failure):\n${f.pageSnapshot}`,
-    change ? describeChange(change) : 'CHANGE SET: not available',
+    change && describeChange(change),
     `HEURISTIC SIGNALS: ${signals.length ? signals.map((s) => `${s.hint} (${s.weight}) - ${s.reason}`).join('; ') : 'none'}`,
   ]
     .filter(Boolean)
@@ -111,7 +120,7 @@ export class FailureClassifier {
 
     if (this.llm) {
       const messages: ChatMessage[] = [
-        { role: 'system', content: SYSTEM },
+        { role: 'system', content: systemPrompt(!!change) },
         { role: 'user', content: describe(f, signals, change) },
       ];
       for (let attempt = 1; attempt <= 2; attempt++) {
