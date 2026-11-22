@@ -49,7 +49,7 @@ export function toMarkdown(results: Triage[], meta: { provider: string; resultsF
 
   const llm = results.filter((r) => r.source === 'llm').length;
   lines.push(
-    `<sub>Classified by ${llm ? meta.provider : 'heuristics only (no LLM reachable)'}` +
+    `<sub>Classified by ${llm ? meta.provider : meta.provider !== 'none' ? `heuristics (${meta.provider} answers were unusable)` : 'heuristics only (no LLM configured or reachable)'}` +
       `${llm && llm < results.length ? ` (${results.length - llm} by heuristic fallback)` : ''} from \`${meta.resultsFile}\`` +
       `${meta.changeBase ? ` and the diff since \`${meta.changeBase.slice(0, 7)}\`` : ''}. ` +
       'AI verdicts are suggestions; check the trace before acting.</sub>',
