@@ -14,6 +14,12 @@ export interface ChatOptions {
   temperature?: number;
   /** Ask the model to return a JSON object. Parse it with `chatJson`. */
   json?: boolean;
+  /**
+   * Optional JSON Schema for the answer. Providers that support constrained decoding
+   * (Groq gpt-oss: strict json_schema) are then guaranteed to return valid, matching JSON;
+   * others fall back to plain JSON mode.
+   */
+  schema?: { name: string; schema: Record<string, unknown> };
   maxTokens?: number;
   timeoutMs?: number;
 }
@@ -114,7 +120,13 @@ class GroqProvider implements LlmProvider {
         temperature: opts.temperature ?? 0,
         max_tokens: reasoning && opts.maxTokens ? Math.max(opts.maxTokens, 4096) : opts.maxTokens,
         ...(reasoning ? { reasoning_effort: 'low' } : {}),
-        ...(opts.json ? { response_format: { type: 'json_object' } } : {}),
+        // json_object mode only validates after generation (and rejects e.g. `0. nine`);
+        // strict json_schema constrains decoding so the output is always valid.
+        ...(opts.json && opts.schema && reasoning
+          ? { response_format: { type: 'json_schema', json_schema: { name: opts.schema.name, strict: true, schema: opts.schema.schema } } }
+          : opts.json
+            ? { response_format: { type: 'json_object' } }
+            : {}),
       },
       { Authorization: `Bearer ${this.apiKey}` },
       opts.timeoutMs,

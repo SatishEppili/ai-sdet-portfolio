@@ -77,6 +77,24 @@ interface LlmVerdict {
   category: string; confidence: number; summary: string; rootCause: string; suggestedFix: string; evidence: string[];
 }
 
+/** Strict schema: lets Groq constrain decoding so the verdict is always valid JSON. */
+const VERDICT_SCHEMA = {
+  name: 'triage_verdict',
+  schema: {
+    type: 'object',
+    additionalProperties: false,
+    required: ['category', 'confidence', 'summary', 'rootCause', 'suggestedFix', 'evidence'],
+    properties: {
+      category: { type: 'string', enum: [...CATEGORIES] },
+      confidence: { type: 'number' },
+      summary: { type: 'string' },
+      rootCause: { type: 'string' },
+      suggestedFix: { type: 'string' },
+      evidence: { type: 'array', items: { type: 'string' } },
+    },
+  },
+};
+
 function isValid(v: Partial<LlmVerdict> | null | undefined): v is LlmVerdict {
   return !!v && (CATEGORIES as readonly string[]).includes(String(v.category)) && typeof v.rootCause === 'string';
 }
@@ -99,7 +117,12 @@ export class FailureClassifier {
       for (let attempt = 1; attempt <= 2; attempt++) {
         try {
           const start = Date.now();
-          const v = await this.llm.chatJson<LlmVerdict>(messages, { temperature: 0, maxTokens: 600 });
+          // Retry with a little temperature: at 0 the model would repeat the same bad output.
+          const v = await this.llm.chatJson<LlmVerdict>(messages, {
+            temperature: attempt === 1 ? 0 : 0.3,
+            maxTokens: 600,
+            schema: VERDICT_SCHEMA,
+          });
           if (!isValid(v)) throw new Error(`invalid verdict: ${JSON.stringify(v).slice(0, 200)}`);
           return {
             ...base,
