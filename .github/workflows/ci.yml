@@ -22,6 +22,8 @@ jobs:
       API_URL: http://localhost:8091
     steps:
       - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0 # full history: triage diffs the PR against its base
 
       # Pull images in the background while Node and the browser install.
       - name: Pull Toolshop images
@@ -50,6 +52,8 @@ jobs:
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           LLM_PROVIDER: ${{ secrets.GROQ_API_KEY != '' && 'groq' || 'none' }}
+          # What changed: the PR's base commit, or the previous commit on a push.
+          TRIAGE_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: npm run triage -- --out triage-report.md
 
       - name: Comment triage on the PR
