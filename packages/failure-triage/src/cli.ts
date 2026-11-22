@@ -1,5 +1,5 @@
 /**
- * npm run triage -- [--results test-results/results.json] [--out triage-report.md] [--no-llm]
+ * npm run triage -- [--results test-results/results.json] [--out triage-report.md] [--base origin/main] [--no-llm]
  *
  * Reads Playwright's JSON report, classifies each failed/flaky test and writes a Markdown
  * report (for the CI job summary / PR comment) plus a JSON file next to it.
@@ -8,6 +8,7 @@
 import { appendFileSync, existsSync, writeFileSync } from 'node:fs';
 import { parseArgs } from 'node:util';
 import { LlmClient } from '../../core/src/llm-client';
+import { loadChangeContext } from './change-context';
 import { FailureClassifier } from './classifier';
 import { readFailures } from './reader';
 import { toMarkdown } from './report';
@@ -17,6 +18,8 @@ const { values } = parseArgs({
     results: { type: 'string', default: 'test-results/results.json' },
     out: { type: 'string', default: 'triage-report.md' },
     'no-llm': { type: 'boolean', default: false },
+    /** Git ref/sha to diff against (PR base). Defaults to $TRIAGE_BASE; omitted = no change context. */
+    base: { type: 'string', default: process.env.TRIAGE_BASE },
   },
 });
 
@@ -40,15 +43,18 @@ if (!values['no-llm'] && failures.length && process.env.LLM_PROVIDER !== 'none')
   }
 }
 
+const change = failures.length ? loadChangeContext(values.base) : undefined;
+if (change) console.log(`[triage] change context: ${change.files.length} file(s) changed since ${change.base.slice(0, 12)}`);
+
 const classifier = new FailureClassifier(llm);
 const results = [];
 for (const f of failures) {
-  const t = await classifier.classify(f);
+  const t = await classifier.classify(f, change);
   console.log(`  ${t.category.padEnd(12)} ${Math.round(t.confidence * 100)}%  ${t.title}`);
   results.push(t);
 }
 
-const md = toMarkdown(results, { provider: llm?.providerName ?? 'none', resultsFile });
+const md = toMarkdown(results, { provider: llm?.providerName ?? 'none', resultsFile, changeBase: change?.base });
 writeFileSync(values.out!, md);
 writeFileSync(values.out!.replace(/\.md$/, '') + '.json', JSON.stringify(results, null, 2));
 console.log(`[triage] wrote ${values.out}`);

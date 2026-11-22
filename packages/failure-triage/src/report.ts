@@ -11,7 +11,7 @@ const ICON: Record<Category, string> = {
 
 const esc = (s: string) => s.replace(/\|/g, '\\|').replace(/\n/g, ' ');
 
-export function toMarkdown(results: Triage[], meta: { provider: string; resultsFile: string }): string {
+export function toMarkdown(results: Triage[], meta: { provider: string; resultsFile: string; changeBase?: string }): string {
   const lines = [REPORT_MARKER, '## 🤖 AI failure triage', ''];
   if (!results.length) {
     lines.push('✅ No failed or flaky tests in this run.');
@@ -49,8 +49,9 @@ export function toMarkdown(results: Triage[], meta: { provider: string; resultsF
 
   const llm = results.filter((r) => r.source === 'llm').length;
   lines.push(
-    `<sub>Classified by ${llm ? meta.provider : 'heuristics only (no LLM reachable)'}` +
-      `${llm && llm < results.length ? ` (${results.length - llm} by heuristic fallback)` : ''} from \`${meta.resultsFile}\`. ` +
+    `<sub>Classified by ${llm ? meta.provider : meta.provider !== 'none' ? `heuristics (${meta.provider} answers were unusable)` : 'heuristics only (no LLM configured or reachable)'}` +
+      `${llm && llm < results.length ? ` (${results.length - llm} by heuristic fallback)` : ''} from \`${meta.resultsFile}\`` +
+      `${meta.changeBase ? ` and the diff since \`${meta.changeBase.slice(0, 7)}\`` : ''}. ` +
       'AI verdicts are suggestions; check the trace before acting.</sub>',
   );
   return lines.filter((l, i, a) => !(l === '' && a[i - 1] === '')).join('\n');

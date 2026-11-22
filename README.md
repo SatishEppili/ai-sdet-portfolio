@@ -13,7 +13,7 @@ Everything runs on free tooling: local LLMs through Ollama, or the Gemini/Groq f
 
 | # | Project | What it does | Status |
 |---|---|---|---|
-| 2 | [AI Failure Triage](packages/failure-triage) | Classifies CI failures (bug / flaky / env / test) with a root cause; 85% on a 20-case benchmark | ✅ |
+| 2 | [AI Failure Triage](packages/failure-triage) | Classifies CI failures (bug / flaky / env / test) with root cause + fix, using the PR diff; 80–85% on a 20-case benchmark with a local 3B model | ✅ |
 | 1 | [Self-Healing Locators](packages/self-healing) | Repairs broken locators at runtime using the DOM + LLM | 🔜 |
 | 4 | [LLM Eval Framework](packages/llm-eval) | Quality, bias and safety gates for an AI interviewer bot | 🔜 |
 | 6 | [AI Red-Teaming](packages/ai-redteam) | Prompt-injection and jailbreak suite mapped to the OWASP LLM Top 10 | 🔜 |
