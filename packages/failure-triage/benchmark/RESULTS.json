@@ -12,12 +12,12 @@
       "category": "test-bug",
       "confidence": 0.8,
       "summary": "Locator typo or stale locator",
-      "rootCause": "The locator 'product-nme' is likely incorrect or outdated, as it matches multiple elements and is not specific enough. The page snapshot shows multiple elements with the same text 'product-nme', indicating a potential issue with the locator.",
-      "suggestedFix": "Update the locator to match a unique element on the page, such as 'product-name' or 'product-title'. Verify that the locator is correct and consistent across the application.",
+      "rootCause": "The locator 'product-nme' is likely incorrect or outdated, as it matches multiple elements and is not unique. This is supported by the page snapshot showing multiple elements with the same text.",
+      "suggestedFix": "Update the locator to match a unique element, such as 'product-name' or 'product-title'.",
       "evidence": [],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 40912
+      "latencyMs": 59111
     }
   },
   {
@@ -44,7 +44,7 @@
       "evidence": [],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 44082
+      "latencyMs": 72226
     }
   },
   {
@@ -60,14 +60,14 @@
       "category": "product-bug",
       "confidence": 0.8,
       "summary": "Expected title 'Toolshop - Home' not found",
-      "rootCause": "The application returns a title with 'Practice Software Testing - Toolshop - v5.0' instead of the expected 'Toolshop - Home'. This suggests a bug in the application's title rendering.",
-      "suggestedFix": "Verify that the application's title is correctly set and updated. Check for any typos or formatting issues in the title string.",
+      "rootCause": "The application returns the wrong title 'Practice Software Testing - Toolshop - v5.0' instead of the expected 'Toolshop - Home'. This suggests a bug in the application's title rendering.",
+      "suggestedFix": "Verify that the application's title is correctly set and updated in the code. Check for any typos or incorrect assumptions about the title format.",
       "evidence": [
         "Expected: 'Toolshop - Home', Received: 'Practice Software Testing - Toolshop - v5.0'"
       ],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 53737
+      "latencyMs": 60805
     }
   },
   {
@@ -91,7 +91,7 @@
       ],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 45777
+      "latencyMs": 45813
     }
   },
   {
@@ -115,7 +115,7 @@
       ],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 30586
+      "latencyMs": 101639
     }
   },
   {
@@ -139,7 +139,7 @@
       ],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 43708
+      "latencyMs": 54167
     }
   },
   {
@@ -156,14 +156,14 @@
       "confidence": 0.8,
       "summary": "Search returns only matching products with 'pliers' in name",
       "rootCause": "The application is filtering out products without 'pliers' in their name, despite the test expecting all visible product names to contain 'pliers'. This suggests a bug in the application's search logic.",
-      "suggestedFix": "Review the application's search logic to ensure it is correctly filtering products by name, and update the test to expect all visible product names to contain 'pliers'.",
+      "suggestedFix": "Check the search logic in the application's code to ensure it is correctly filtering products by name, and update the test to expect a different behavior if the search filter is applied.",
       "evidence": [
         "Error: every visible product name should contain 'pliers'",
         "Expected: true, Received: false"
       ],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 44857
+      "latencyMs": 51617
     }
   },
   {
@@ -179,15 +179,16 @@
       "category": "product-bug",
       "confidence": 0.9,
       "summary": "Price is expected to be greater than 0 but is 0",
-      "rootCause": "The application is returning a price of 0 for at least one product, indicating a bug in the application's pricing logic.",
-      "suggestedFix": "Verify that the application's pricing logic is correct and that the price is being set correctly for each product. Check for any typos or incorrect assumptions in the test code.",
+      "rootCause": "The application is returning a price of 0 for at least one product, indicating a bug in the application's data or pricing logic.",
+      "suggestedFix": "Verify that the application's pricing logic is correct and that the data is being retrieved correctly from the backend. Check for any typos or incorrect assumptions in the test code.",
       "evidence": [
         "Expected: > 0",
-        "Received:   0"
+        "Received:   0",
+        "price is expected to be greater than 0 but is 0"
       ],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 41772
+      "latencyMs": 71777
     }
   },
   {
@@ -208,16 +209,16 @@
       "expected": "product-bug",
       "category": "product-bug",
       "confidence": 0.8,
-      "summary": "API validation error prevents contact message from being accepted",
-      "rootCause": "The API rejected the request with a 422 validation error, indicating that the email address is not valid.",
-      "suggestedFix": "Verify that the email address is valid and update the client-side validation rules to allow for valid email addresses.",
+      "summary": "API validation error prevents contact message from being sent",
+      "rootCause": "The API rejected the request with a 422 validation error, preventing the contact message from being sent.",
+      "suggestedFix": "Verify that the API endpoint is correctly configured to accept valid email addresses and handle validation errors.",
       "evidence": [
         "HTTP ERROR: POST https://api.practicesoftwaretesting.com/messages -> 422",
         "HEURISTIC SIGNALS: product-bug (0.45) - API rejected a request with a 4xx validation error"
       ],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 41428
+      "latencyMs": 48394
     }
   },
   {
@@ -247,7 +248,7 @@
       ],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 31917
+      "latencyMs": 41694
     }
   },
   {
@@ -274,7 +275,7 @@
       "evidence": [],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 11306
+      "latencyMs": 51859
     }
   },
   {
@@ -301,7 +302,7 @@
       "evidence": [],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 15306
+      "latencyMs": 91258
     }
   },
   {
@@ -330,7 +331,7 @@
       ],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 18871
+      "latencyMs": 20377
     }
   },
   {
@@ -360,7 +361,7 @@
       ],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 40060
+      "latencyMs": 35506
     }
   },
   {
@@ -390,7 +391,7 @@
       ],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 33448
+      "latencyMs": 41133
     }
   },
   {
@@ -417,7 +418,7 @@
       "evidence": [],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 46266
+      "latencyMs": 55152
     }
   },
   {
@@ -444,7 +445,7 @@
       "evidence": [],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 38514
+      "latencyMs": 55486
     }
   },
   {
@@ -468,15 +469,15 @@
         }
       ],
       "expected": "flaky",
-      "category": "flaky",
+      "category": "environment",
       "confidence": 0.9,
-      "summary": "Failed, then passed on retry with no code change",
-      "rootCause": "The test failed due to a network-level failure (connection refused), but passed on retry without any code changes.",
-      "suggestedFix": "Verify that the network connection is stable and retry the test with a shorter timeout to ensure it fails consistently.",
+      "summary": "Network-level failure (connection refused)",
+      "rootCause": "The failed request to https://api.practicesoftwaretesting.com/products resulted in a connection reset error.",
+      "suggestedFix": "Verify that the API endpoint is reachable and functioning correctly.",
       "evidence": [],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 46568
+      "latencyMs": 54434
     }
   },
   {
@@ -503,7 +504,7 @@
       "evidence": [],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 58624
+      "latencyMs": 49908
     }
   },
   {
@@ -525,12 +526,12 @@
       "category": "flaky",
       "confidence": 0.9,
       "summary": "Test fails intermittently, passes on retry without code change",
-      "rootCause": "The test is flaky due to intermittent issues, as evidenced by the failed test taking 10421ms and passing on retry without any changes to the test code.",
-      "suggestedFix": "Review the test code and environment to identify the root cause of the intermittent failures and make necessary adjustments to improve test reliability.",
+      "rootCause": "The test is flaky due to intermittent issues, as evidenced by the failed test on one attempt and successful test on the next attempt without any changes to the code.",
+      "suggestedFix": "Review the test code and environment to identify the root cause of the intermittent failure and make necessary adjustments to ensure the test is reliable.",
       "evidence": [],
       "source": "llm",
       "model": "ollama",
-      "latencyMs": 31696
+      "latencyMs": 37764
     }
   }
 ]
