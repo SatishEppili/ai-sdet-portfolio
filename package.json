@@ -17,7 +17,10 @@
     "toolshop:down": "docker compose -f docker/toolshop.compose.yml down -v",
     "triage": "tsx packages/failure-triage/src/cli.ts",
     "triage:seed": "playwright test -c packages/failure-triage/benchmark/playwright.config.ts || exit 0",
-    "triage:bench": "tsx packages/failure-triage/src/bench.ts"
+    "triage:bench": "tsx packages/failure-triage/src/bench.ts",
+    "heal:learn": "tsx packages/self-healing/src/learn.ts",
+    "heal:bench": "tsx packages/self-healing/src/bench.ts",
+    "heal:report": "tsx packages/self-healing/src/report.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",

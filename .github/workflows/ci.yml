@@ -42,6 +42,10 @@ jobs:
 
       - name: Run Playwright tests
         id: tests
+        env:
+          # Self-healing asks an LLM only for ambiguous matches; without a key it refuses those.
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          LLM_PROVIDER: ${{ secrets.GROQ_API_KEY != '' && 'groq' || 'none' }}
         run: npx playwright test
 
       # Runs whenever the tests ran (also catches flaky tests on a green run).
@@ -55,6 +59,11 @@ jobs:
           # What changed: the PR's base commit, or the previous commit on a push.
           TRIAGE_BASE: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: npm run triage -- --out triage-report.md
+
+      # Tests that passed only because a locator self-healed: turn each heal into a code fix.
+      - name: Self-healing report
+        if: ${{ !cancelled() && steps.tests.outcome != 'skipped' }}
+        run: npm run heal:report -- --out heal-report.md
 
       - name: Comment triage on the PR
         if: ${{ !cancelled() && github.event_name == 'pull_request' && steps.triage.outputs.failures != '' && steps.triage.outputs.failures != '0' }}
@@ -75,4 +84,5 @@ jobs:
             playwright-report/
             test-results/
             triage-report.*
+            heal-report.md
           retention-days: 14

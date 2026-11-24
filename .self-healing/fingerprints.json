@@ -1,0 +1,1184 @@
+[
+  {
+    "tag": "h5",
+    "role": "heading",
+    "name": "",
+    "text": "",
+    "testId": "product-name",
+    "attrs": {},
+    "classes": [
+      "card-title"
+    ],
+    "ancestorTestId": "product-01M86XQ0F7GZ2QSA5XKTY1FP63",
+    "visible": true,
+    "key": "/::product-name",
+    "route": "/",
+    "count": 2,
+    "recordedAt": "2026-11-24T14:30:11.229Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "Search",
+    "text": "",
+    "testId": "search-query",
+    "attrs": {
+      "id": "search-query",
+      "type": "text",
+      "placeholder": "Search"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "filters",
+    "visible": true,
+    "key": "/::search-query",
+    "route": "/",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:37.851Z"
+  },
+  {
+    "tag": "button",
+    "role": "button",
+    "name": "Search",
+    "text": "Search",
+    "testId": "search-submit",
+    "attrs": {
+      "type": "submit"
+    },
+    "classes": [
+      "btn",
+      "btn-secondary"
+    ],
+    "ancestorTestId": "filters",
+    "visible": true,
+    "key": "/::search-submit",
+    "route": "/",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:38.212Z"
+  },
+  {
+    "tag": "select",
+    "role": "combobox",
+    "name": "sort",
+    "text": "Name (A - Z) Name (Z - A) Price (High - Low) Price (Low - High) CO₂ Rating (A - ",
+    "testId": "sort",
+    "attrs": {
+      "aria-label": "sort"
+    },
+    "classes": [
+      "form-select"
+    ],
+    "ancestorTestId": "filters",
+    "visible": true,
+    "key": "/::sort",
+    "route": "/",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:12.481Z"
+  },
+  {
+    "tag": "button",
+    "role": "button",
+    "name": "",
+    "text": "",
+    "testId": "nav-menu",
+    "attrs": {
+      "id": "menu",
+      "type": "button"
+    },
+    "classes": [
+      "nav-link",
+      "dropdown-toggle",
+      "btn-link-style"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/account::nav-menu",
+    "route": "/account",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:31:21.075Z"
+  },
+  {
+    "tag": "h1",
+    "role": "heading",
+    "name": "My account",
+    "text": "My account",
+    "testId": "page-title",
+    "attrs": {},
+    "classes": [],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/account::page-title",
+    "route": "/account",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:19.337Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "Email address *",
+    "text": "",
+    "testId": "email",
+    "attrs": {
+      "id": "email",
+      "type": "email",
+      "placeholder": "Your email"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "login-form",
+    "visible": true,
+    "key": "/auth/login::email",
+    "route": "/auth/login",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:30.240Z"
+  },
+  {
+    "tag": "div",
+    "role": "",
+    "name": "",
+    "text": "Invalid email or password",
+    "testId": "login-error",
+    "attrs": {},
+    "classes": [
+      "alert",
+      "alert-danger"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/auth/login::login-error",
+    "route": "/auth/login",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:16.538Z"
+  },
+  {
+    "tag": "input",
+    "role": "button",
+    "name": "Login",
+    "text": "",
+    "testId": "login-submit",
+    "attrs": {
+      "type": "submit",
+      "aria-label": "Login"
+    },
+    "classes": [
+      "btnSubmit"
+    ],
+    "ancestorTestId": "login-form",
+    "visible": true,
+    "key": "/auth/login::login-submit",
+    "route": "/auth/login",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:30.768Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "Password *",
+    "text": "",
+    "testId": "password",
+    "attrs": {
+      "id": "password",
+      "type": "password",
+      "placeholder": "Your password"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "login-form",
+    "visible": true,
+    "key": "/auth/login::password",
+    "route": "/auth/login",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:30.439Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "City",
+    "text": "",
+    "testId": "city",
+    "attrs": {
+      "id": "city",
+      "type": "text",
+      "placeholder": "Your City *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::city",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:50.983Z"
+  },
+  {
+    "tag": "select",
+    "role": "combobox",
+    "name": "Country",
+    "text": "Your country * Albania Åland Islands Algeria American Samoa Andorra Angola Angui",
+    "testId": "country",
+    "attrs": {
+      "id": "country"
+    },
+    "classes": [
+      "form-select"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::country",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:48.375Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "Date of Birth *",
+    "text": "",
+    "testId": "dob",
+    "attrs": {
+      "id": "dob",
+      "type": "text",
+      "placeholder": "YYYY-MM-DD"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::dob",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:48.008Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "Email address",
+    "text": "",
+    "testId": "email",
+    "attrs": {
+      "id": "email",
+      "type": "text",
+      "placeholder": "Your email *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::email",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:52.372Z"
+  },
+  {
+    "tag": "div",
+    "role": "alert",
+    "name": "",
+    "text": "Email is required",
+    "testId": "email-error",
+    "attrs": {
+      "id": "email-error"
+    },
+    "classes": [
+      "alert",
+      "alert-danger",
+      "mt-3"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::email-error",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:31.462Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "First name",
+    "text": "",
+    "testId": "first-name",
+    "attrs": {
+      "id": "first_name",
+      "type": "text",
+      "placeholder": "First name *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::first-name",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:46.851Z"
+  },
+  {
+    "tag": "div",
+    "role": "alert",
+    "name": "",
+    "text": "First name is required",
+    "testId": "first-name-error",
+    "attrs": {
+      "id": "first_name-error"
+    },
+    "classes": [
+      "alert",
+      "alert-danger"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::first-name-error",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:29.951Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "House number",
+    "text": "",
+    "testId": "house_number",
+    "attrs": {
+      "id": "house_number",
+      "type": "text",
+      "placeholder": "e.g. 42 *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::house_number",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:49.419Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "Last name",
+    "text": "",
+    "testId": "last-name",
+    "attrs": {
+      "id": "last_name",
+      "type": "text",
+      "placeholder": "Your last name *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::last-name",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:47.389Z"
+  },
+  {
+    "tag": "div",
+    "role": "alert",
+    "name": "",
+    "text": "Last name is required",
+    "testId": "last-name-error",
+    "attrs": {
+      "id": "last_name-error"
+    },
+    "classes": [
+      "alert",
+      "alert-danger"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::last-name-error",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:31.172Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "Password",
+    "text": "",
+    "testId": "password",
+    "attrs": {
+      "id": "password",
+      "type": "password",
+      "placeholder": "Your password"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::password",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:52.655Z"
+  },
+  {
+    "tag": "div",
+    "role": "alert",
+    "name": "",
+    "text": "Password is required Password must be minimal 6 characters long. Password can no",
+    "testId": "password-error",
+    "attrs": {
+      "id": "password-error"
+    },
+    "classes": [
+      "alert",
+      "alert-danger",
+      "mt-3"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::password-error",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:31.790Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "Phone",
+    "text": "",
+    "testId": "phone",
+    "attrs": {
+      "id": "phone",
+      "type": "text",
+      "placeholder": "Your phone *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::phone",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:51.897Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "Postal code",
+    "text": "",
+    "testId": "postal_code",
+    "attrs": {
+      "id": "postal_code",
+      "type": "text",
+      "placeholder": "Your Postcode *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::postal_code",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:48.661Z"
+  },
+  {
+    "tag": "button",
+    "role": "button",
+    "name": "Register",
+    "text": "Register",
+    "testId": "register-submit",
+    "attrs": {
+      "type": "submit"
+    },
+    "classes": [
+      "btnSubmit",
+      "mb-3"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::register-submit",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:53.011Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "State",
+    "text": "",
+    "testId": "state",
+    "attrs": {
+      "id": "state",
+      "type": "text",
+      "placeholder": "Your State *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::state",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:51.444Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "Street",
+    "text": "",
+    "testId": "street",
+    "attrs": {
+      "id": "street",
+      "type": "text",
+      "placeholder": "Your Street *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "register-form",
+    "visible": true,
+    "key": "/auth/register::street",
+    "route": "/auth/register",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:49.838Z"
+  },
+  {
+    "tag": "td",
+    "role": "",
+    "name": "",
+    "text": "$28.30",
+    "testId": "cart-total",
+    "attrs": {},
+    "classes": [
+      "col-md-2",
+      "text-end"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/checkout::cart-total",
+    "route": "/checkout",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:48.682Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "City",
+    "text": "",
+    "testId": "city",
+    "attrs": {
+      "id": "city",
+      "type": "text",
+      "placeholder": "Your City *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/checkout::city",
+    "route": "/checkout",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:50.709Z"
+  },
+  {
+    "tag": "select",
+    "role": "combobox",
+    "name": "Country",
+    "text": "Your country * Albania Åland Islands Algeria American Samoa Andorra Angola Angui",
+    "testId": "country",
+    "attrs": {
+      "id": "country"
+    },
+    "classes": [
+      "form-select"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/checkout::country",
+    "route": "/checkout",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:51.675Z"
+  },
+  {
+    "tag": "button",
+    "role": "button",
+    "name": "Check payment",
+    "text": "Check payment",
+    "testId": "finish",
+    "attrs": {
+      "type": "button"
+    },
+    "classes": [
+      "btn",
+      "btn-success"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/checkout::finish",
+    "route": "/checkout",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:53.526Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "House number",
+    "text": "",
+    "testId": "house_number",
+    "attrs": {
+      "id": "house_number",
+      "type": "text",
+      "placeholder": "e.g. 42 *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/checkout::house_number",
+    "route": "/checkout",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:52.434Z"
+  },
+  {
+    "tag": "span",
+    "role": "",
+    "name": "",
+    "text": "$28.30",
+    "testId": "line-price",
+    "attrs": {},
+    "classes": [],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/checkout::line-price",
+    "route": "/checkout",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:48.422Z"
+  },
+  {
+    "tag": "select",
+    "role": "combobox",
+    "name": "Payment Method",
+    "text": "Choose your payment method Bank Transfer Cash on Delivery Credit Card Buy Now Pa",
+    "testId": "payment-method",
+    "attrs": {
+      "id": "payment-method"
+    },
+    "classes": [
+      "form-select"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/checkout::payment-method",
+    "route": "/checkout",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:53.210Z"
+  },
+  {
+    "tag": "div",
+    "role": "",
+    "name": "",
+    "text": "Payment was successful",
+    "testId": "payment-success-message",
+    "attrs": {},
+    "classes": [
+      "help-block"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/checkout::payment-success-message",
+    "route": "/checkout",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:54.065Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "Postal code",
+    "text": "",
+    "testId": "postal_code",
+    "attrs": {
+      "id": "postal_code",
+      "type": "text",
+      "placeholder": "Your Postcode *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/checkout::postal_code",
+    "route": "/checkout",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:51.934Z"
+  },
+  {
+    "tag": "button",
+    "role": "button",
+    "name": "Proceed to checkout",
+    "text": "Proceed to checkout",
+    "testId": "proceed-1",
+    "attrs": {
+      "type": "button"
+    },
+    "classes": [
+      "btn",
+      "btn-success"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/checkout::proceed-1",
+    "route": "/checkout",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:48.986Z"
+  },
+  {
+    "tag": "button",
+    "role": "button",
+    "name": "Proceed to checkout",
+    "text": "Proceed to checkout",
+    "testId": "proceed-2",
+    "attrs": {
+      "type": "button"
+    },
+    "classes": [
+      "btn",
+      "btn-success"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/checkout::proceed-2",
+    "route": "/checkout",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:49.467Z"
+  },
+  {
+    "tag": "button",
+    "role": "button",
+    "name": "Proceed to checkout",
+    "text": "Proceed to checkout",
+    "testId": "proceed-3",
+    "attrs": {
+      "type": "button"
+    },
+    "classes": [
+      "btn",
+      "btn-success"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/checkout::proceed-3",
+    "route": "/checkout",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:52.711Z"
+  },
+  {
+    "tag": "input",
+    "role": "spinbutton",
+    "name": "Quantity for Combination Pliers",
+    "text": "",
+    "testId": "product-quantity",
+    "attrs": {
+      "type": "number"
+    },
+    "classes": [
+      "form-control",
+      "quantity"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/checkout::product-quantity",
+    "route": "/checkout",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:31:50.329Z"
+  },
+  {
+    "tag": "span",
+    "role": "",
+    "name": "",
+    "text": "Combination Pliers",
+    "testId": "product-title",
+    "attrs": {},
+    "classes": [
+      "product-title"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/checkout::product-title",
+    "route": "/checkout",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:47.385Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "State",
+    "text": "",
+    "testId": "state",
+    "attrs": {
+      "id": "state",
+      "type": "text",
+      "placeholder": "State *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/checkout::state",
+    "route": "/checkout",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:51.202Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "Street",
+    "text": "",
+    "testId": "street",
+    "attrs": {
+      "id": "street",
+      "type": "text",
+      "placeholder": "Your Street *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/checkout::street",
+    "route": "/checkout",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:50.397Z"
+  },
+  {
+    "tag": "input",
+    "role": "button",
+    "name": "Send",
+    "text": "",
+    "testId": "contact-submit",
+    "attrs": {
+      "type": "submit"
+    },
+    "classes": [
+      "btnSubmit"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/contact::contact-submit",
+    "route": "/contact",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:27.061Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "Email address",
+    "text": "",
+    "testId": "email",
+    "attrs": {
+      "id": "email",
+      "type": "email",
+      "placeholder": "Your email *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/contact::email",
+    "route": "/contact",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:32.217Z"
+  },
+  {
+    "tag": "div",
+    "role": "alert",
+    "name": "",
+    "text": "Email is required",
+    "testId": "email-error",
+    "attrs": {
+      "id": "email_alert"
+    },
+    "classes": [
+      "alert",
+      "alert-danger",
+      "mt-3",
+      "p-2"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/contact::email-error",
+    "route": "/contact",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:29.228Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "First name",
+    "text": "",
+    "testId": "first-name",
+    "attrs": {
+      "id": "first_name",
+      "type": "text",
+      "placeholder": "Your first name *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/contact::first-name",
+    "route": "/contact",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:30.019Z"
+  },
+  {
+    "tag": "div",
+    "role": "alert",
+    "name": "",
+    "text": "First name is required",
+    "testId": "first-name-error",
+    "attrs": {
+      "id": "first_name_alert"
+    },
+    "classes": [
+      "alert",
+      "alert-danger",
+      "mt-3",
+      "p-2"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/contact::first-name-error",
+    "route": "/contact",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:27.899Z"
+  },
+  {
+    "tag": "input",
+    "role": "textbox",
+    "name": "Last name",
+    "text": "",
+    "testId": "last-name",
+    "attrs": {
+      "id": "last_name",
+      "type": "text",
+      "placeholder": "Your last name *"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/contact::last-name",
+    "route": "/contact",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:31.673Z"
+  },
+  {
+    "tag": "div",
+    "role": "alert",
+    "name": "",
+    "text": "Last name is required",
+    "testId": "last-name-error",
+    "attrs": {
+      "id": "last_name_alert"
+    },
+    "classes": [
+      "alert",
+      "alert-danger",
+      "mt-3",
+      "p-2"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/contact::last-name-error",
+    "route": "/contact",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:28.337Z"
+  },
+  {
+    "tag": "textarea",
+    "role": "textbox",
+    "name": "Message *",
+    "text": "",
+    "testId": "message",
+    "attrs": {
+      "id": "message"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/contact::message",
+    "route": "/contact",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:32.787Z"
+  },
+  {
+    "tag": "div",
+    "role": "alert",
+    "name": "",
+    "text": "Message is required",
+    "testId": "message-error",
+    "attrs": {
+      "id": "message_alert"
+    },
+    "classes": [
+      "alert",
+      "alert-danger",
+      "mt-3",
+      "p-2"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/contact::message-error",
+    "route": "/contact",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:29.783Z"
+  },
+  {
+    "tag": "select",
+    "role": "combobox",
+    "name": "Subject",
+    "text": "Select a subject * Customer service Webmaster Return Payments Warranty Status of",
+    "testId": "subject",
+    "attrs": {
+      "id": "subject"
+    },
+    "classes": [
+      "form-select"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/contact::subject",
+    "route": "/contact",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:32.415Z"
+  },
+  {
+    "tag": "div",
+    "role": "alert",
+    "name": "",
+    "text": "Subject is required",
+    "testId": "subject-error",
+    "attrs": {
+      "id": "subject_alert"
+    },
+    "classes": [
+      "alert",
+      "alert-danger",
+      "mt-3",
+      "p-2"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/contact::subject-error",
+    "route": "/contact",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:29.543Z"
+  },
+  {
+    "tag": "button",
+    "role": "button",
+    "name": "Add to cart",
+    "text": "Add to cart",
+    "testId": "add-to-cart",
+    "attrs": {
+      "id": "btn-add-to-cart"
+    },
+    "classes": [
+      "btn-success",
+      "btn"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/product/:id::add-to-cart",
+    "route": "/product/:id",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:41.553Z"
+  },
+  {
+    "tag": "span",
+    "role": "",
+    "name": "",
+    "text": "2",
+    "testId": "cart-quantity",
+    "attrs": {
+      "id": "lblCartCount"
+    },
+    "classes": [
+      "badge",
+      "rounded-pill",
+      "bg-danger"
+    ],
+    "ancestorTestId": "nav-cart",
+    "visible": true,
+    "key": "/product/:id::cart-quantity",
+    "route": "/product/:id",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:44.574Z"
+  },
+  {
+    "tag": "a",
+    "role": "link",
+    "name": "cart",
+    "text": "2",
+    "testId": "nav-cart",
+    "attrs": {
+      "href": "/checkout",
+      "aria-label": "cart"
+    },
+    "classes": [
+      "nav-link"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/product/:id::nav-cart",
+    "route": "/product/:id",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:44.974Z"
+  },
+  {
+    "tag": "h1",
+    "role": "heading",
+    "name": "Combination Pliers",
+    "text": "Combination Pliers",
+    "testId": "product-name",
+    "attrs": {},
+    "classes": [],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/product/:id::product-name",
+    "route": "/product/:id",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:33.007Z"
+  },
+  {
+    "tag": "input",
+    "role": "spinbutton",
+    "name": "Quantity",
+    "text": "",
+    "testId": "quantity",
+    "attrs": {
+      "id": "quantity-input",
+      "type": "number"
+    },
+    "classes": [
+      "form-control"
+    ],
+    "ancestorTestId": "",
+    "visible": true,
+    "key": "/product/:id::quantity",
+    "route": "/product/:id",
+    "count": 1,
+    "recordedAt": "2026-11-24T14:30:41.124Z"
+  }
+]

@@ -14,7 +14,7 @@ Everything runs on free tooling: local LLMs through Ollama, or the Gemini/Groq f
 | # | Project | What it does | Status |
 |---|---|---|---|
 | 2 | [AI Failure Triage](packages/failure-triage) | Classifies CI failures (bug / flaky / env / test) with root cause + fix, using the PR diff; 80–85% on a 20-case benchmark with a local 3B model | ✅ |
-| 1 | [Self-Healing Locators](packages/self-healing) | Repairs broken locators at runtime using the DOM + LLM | 🔜 |
+| 1 | [Self-Healing Locators](packages/self-healing) | Repairs renamed/moved locators at runtime, refuses when unsure; 8/8 heals, 0/6 false heals on a 14-case benchmark | ✅ |
 | 4 | [LLM Eval Framework](packages/llm-eval) | Quality, bias and safety gates for an AI interviewer bot | 🔜 |
 | 6 | [AI Red-Teaming](packages/ai-redteam) | Prompt-injection and jailbreak suite mapped to the OWASP LLM Top 10 | 🔜 |
 | 7 | [Exploratory Agent](packages/explorer-agent) | Autonomous browser agent that hunts for defects | 🔜 |
@@ -28,7 +28,8 @@ See [ROADMAP.md](ROADMAP.md) for progress.
 packages/core/        shared LLM client (Ollama | Gemini | Groq)
 src/api/              Toolshop REST client (live test data, API tests)
 src/pages/            page objects (data-test locators)
-src/fixtures/         Playwright fixtures; AI hooks plug in here
+src/fixtures/         Playwright fixtures (diagnostics for triage, test data)
+.self-healing/        fingerprints of page-object elements (npm run heal:learn)
 tests/ui/             UI tests: auth, catalog, cart, checkout, contact, register
 tests/api/            REST API tests: auth, products, search
 docker/               local test lab (Open WebUI, Juice Shop, Ollama)

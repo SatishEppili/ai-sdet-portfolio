@@ -24,10 +24,10 @@
 - [x] Strict JSON schema for Groq verdicts (gpt-oss emitted invalid JSON in json_object mode)
 
 ### Project 1: Self-healing locators (`packages/self-healing`)
-- [ ] Fixture that wraps locators and catches resolution failures
-- [ ] Trimmed-DOM prompt → candidate locators → validate → retry
-- [ ] Heal log (JSON) + suggested POM patch
-- [ ] Benchmark: heal rate + false-heal rate on the-internet / modified Toolshop
+- [x] Locator Proxy via BasePage.byTestId (no test changes); heals only before actions and positive assertions
+- [x] Fingerprints from green runs -> deterministic similarity -> LLM only for the grey zone -> verified stable locator
+- [x] Heal log + suggested page-object patch (npm run heal:report, CI job summary)
+- [x] Benchmark on a DOM-mutated Toolshop: heal rate 8/8, false heals 0/6 (decoys next to removed elements)
 
 ## Phase 2: Testing AI (Weeks 6–9)
 ### Project 4: LLM evaluation framework (`packages/llm-eval`)
