@@ -1,11 +1,15 @@
 import { test, expect, type Locator, type Page } from '@playwright/test';
+import { healable } from '../../packages/self-healing/src/healing-locator';
 
 export abstract class BasePage {
   constructor(protected readonly page: Page) {}
 
-  /** All locators go through here so the self-healing layer (Project 1) can wrap them later. */
+  /**
+   * All page-object locators go through here, so the self-healing layer can repair them when a
+   * data-test attribute is renamed (SELF_HEAL=heal|learn|off, see packages/self-healing).
+   */
   protected byTestId(id: string): Locator {
-    return this.page.getByTestId(id);
+    return healable(this.page, id);
   }
 
   async goto(path = '/') {

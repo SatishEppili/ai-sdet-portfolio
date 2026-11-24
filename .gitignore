@@ -9,3 +9,6 @@ heal-log*.json
 triage-report*.md
 .vscode/
 test-results-seeded/
+.self-healing/learned/
+test-results-heal/
+heal-report*.md
