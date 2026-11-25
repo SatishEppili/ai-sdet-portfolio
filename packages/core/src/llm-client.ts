@@ -137,14 +137,15 @@ class GroqProvider implements LlmProvider {
 
 // ---------------------------------------------------------------- public API
 
-export function createProvider(name = process.env.LLM_PROVIDER ?? 'ollama'): LlmProvider {
+/** `model` overrides the provider's env default (e.g. a different model for an LLM judge). */
+export function createProvider(name = process.env.LLM_PROVIDER ?? 'ollama', model?: string): LlmProvider {
   switch (name.toLowerCase()) {
     case 'ollama':
-      return new OllamaProvider();
+      return new OllamaProvider(model || undefined);
     case 'gemini':
-      return new GeminiProvider();
+      return new GeminiProvider(model || undefined);
     case 'groq':
-      return new GroqProvider();
+      return new GroqProvider(model || undefined);
     default:
       throw new Error(`Unknown LLM_PROVIDER "${name}". Use ollama | gemini | groq.`);
   }
@@ -155,6 +156,10 @@ export class LlmClient {
 
   get providerName() {
     return this.provider.name;
+  }
+
+  get model() {
+    return this.provider.model;
   }
 
   async chat(messages: ChatMessage[], opts?: ChatOptions): Promise<ChatResult> {
@@ -198,7 +203,7 @@ function requireEnv(key: string): string {
 }
 
 class HttpError extends Error {
-  constructor(public status: number, message: string) {
+  constructor(public status: number, message: string, public retryAfterMs?: number) {
     super(message);
   }
 }
@@ -211,19 +216,36 @@ async function postJson(url: string, payload: unknown, headers: Record<string, s
     signal: AbortSignal.timeout(timeoutMs),
   });
   if (!res.ok) {
-    throw new HttpError(res.status, `LLM HTTP ${res.status} from ${new URL(url).host}: ${(await res.text()).slice(0, 300)}`);
+    const text = await res.text();
+    const header = Number(res.headers.get('retry-after'));
+    // Groq also says it in the body: "Please try again in 1.2525s" / "in 850ms".
+    const hint = text.match(/try again in ([\d.]+)\s*(ms|s)\b/i);
+    const retryAfterMs =
+      Number.isFinite(header) && header > 0 ? header * 1000 : hint ? Number(hint[1]) * (hint[2].toLowerCase() === 'ms' ? 1 : 1000) : undefined;
+    throw new HttpError(res.status, `LLM HTTP ${res.status} from ${new URL(url).host}: ${text.slice(0, 300)}`, retryAfterMs);
   }
   return res.json() as Promise<any>;
 }
 
-async function withRetry<T>(fn: () => Promise<T>, attempts = 3): Promise<T> {
+/**
+ * Retries rate limits (429) and 5xx. 429s get more patience (free tiers have per-minute token
+ * limits) and honour the server's hint; a little jitter stops parallel callers retrying in lockstep.
+ */
+async function withRetry<T>(fn: () => Promise<T>, attempts = 5, rateLimitAttempts = 10): Promise<T> {
   for (let i = 1; ; i++) {
     try {
       return await fn();
     } catch (err) {
-      const retryable = err instanceof HttpError ? err.status === 429 || err.status >= 500 : false;
-      if (!retryable || i >= attempts) throw err;
-      await new Promise((r) => setTimeout(r, 1000 * 2 ** (i - 1)));
+      const http = err instanceof HttpError ? err : undefined;
+      // A daily quota won't recover in seconds: fail fast instead of crawling for minutes.
+      if (http?.status === 429 && /per day|TPD|RPD/i.test(http.message)) {
+        throw new Error(`Daily LLM quota exhausted; try later, use another model/provider, or upgrade. ${http.message}`);
+      }
+      const retryable = http ? http.status === 429 || http.status >= 500 : false;
+      if (!retryable || i >= (http?.status === 429 ? rateLimitAttempts : attempts)) throw err;
+      const backoff = Math.min(16_000, 1000 * 2 ** (i - 1));
+      const wait = Math.min(30_000, (http?.retryAfterMs ?? backoff) * 1.1) + Math.random() * 500;
+      await new Promise((r) => setTimeout(r, wait));
     }
   }
 }

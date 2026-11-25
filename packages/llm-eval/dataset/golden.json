@@ -1,0 +1,170 @@
+{
+  "description": "Golden set for InterviewBot: SDET interview questions with key points and candidate answers of known quality. Expected score bands: strong 7-10, partial 4-7, weak 1-3.",
+  "bands": { "strong": [7, 10], "partial": [4, 7], "weak": [1, 3] },
+  "questions": [
+    {
+      "id": "q01",
+      "question": "What is the difference between smoke testing and regression testing?",
+      "keyPoints": ["smoke = quick check that the build's critical paths work", "regression = verify existing functionality still works after changes", "smoke is shallow/broad and run first; regression is deeper and larger"],
+      "answers": {
+        "strong": "Smoke testing is a quick, shallow check of the most critical paths, like login and checkout, run on every new build to decide if it is stable enough to test further. Regression testing re-runs a much larger set of existing tests after a change to make sure features that used to work still work. So smoke is a fast gate run first, regression is broader and deeper and catches side effects of changes.",
+        "partial": "Smoke testing checks if the build basically works. Regression testing is testing again after changes.",
+        "weak": "Smoke testing is when you test the app for performance under heavy load, and regression is a statistics method for predicting values."
+      }
+    },
+    {
+      "id": "q02",
+      "question": "What is a flaky test and how do you deal with it?",
+      "keyPoints": ["passes and fails without code changes", "common causes: timing/race conditions, shared test data, environment, order dependence", "fix root cause, quarantine and track; don't just add retries/sleeps"],
+      "answers": {
+        "strong": "A flaky test passes and fails on the same code without any change. Typical causes are race conditions and fixed sleeps instead of proper waits, shared or leftover test data, dependence on test order, and unstable environments or third-party services. I first reproduce it by running it repeatedly, look at traces to find the root cause and fix that, for example replace sleeps with web-first assertions or isolate the data. While it's being fixed I quarantine it and track it, instead of hiding it behind blind retries.",
+        "partial": "A flaky test is one that sometimes fails. You can add retries or a wait so it passes more often.",
+        "weak": "A flaky test is a test that has not been written yet but is planned for the next sprint."
+      }
+    },
+    {
+      "id": "q03",
+      "question": "Explain the Page Object Model and why it is used.",
+      "keyPoints": ["class per page/component holding locators and actions", "tests call page methods instead of raw selectors", "reduces duplication; a UI change is fixed in one place; more readable tests"],
+      "answers": {
+        "strong": "The Page Object Model puts each page or component of the UI in its own class that holds its locators and the actions you can do there, like LoginPage.login(email, password). Tests call these methods instead of using selectors directly. When the UI changes you update one page object instead of every test, it removes duplication, and the tests read like user flows.",
+        "partial": "Page Object Model means you make a class for each page. It makes the code more organized.",
+        "weak": "The Page Object Model is a database design where each web page is stored as a row in a table."
+      }
+    },
+    {
+      "id": "q04",
+      "question": "Why are dedicated test attributes like data-test often preferred over CSS classes or XPath for locators?",
+      "keyPoints": ["stable: not tied to styling or DOM structure", "CSS classes/XPath break on styling or layout refactors", "explicit contract between devs and tests"],
+      "answers": {
+        "strong": "Dedicated attributes like data-test exist only for tests, so they don't change when designers restyle the page or developers restructure the DOM. CSS classes change with styling and long XPath expressions break whenever the layout moves. A data-test attribute is an explicit contract between developers and testers, so locators stay stable and readable. User-facing locators like roles and labels are another good option.",
+        "partial": "Because data-test attributes are easier to read than XPath.",
+        "weak": "Because data-test attributes make the page load faster for users."
+      }
+    },
+    {
+      "id": "q05",
+      "question": "What is the test automation pyramid?",
+      "keyPoints": ["many fast unit tests at the bottom", "fewer integration/service/API tests in the middle", "few slow end-to-end UI tests at the top", "goal: fast feedback, lower cost and flakiness"],
+      "answers": {
+        "strong": "The test pyramid says to have many fast, cheap unit tests at the base, a smaller layer of integration or API tests in the middle, and only a few end-to-end UI tests at the top. Lower layers are faster, more stable and pinpoint failures better; UI tests are slow and brittle, so you use them only for critical user journeys. Inverting it into an ice-cream cone gives slow, flaky pipelines.",
+        "partial": "It's a pyramid where you have unit tests and UI tests, and you should have more unit tests.",
+        "weak": "The test pyramid is the order in which testers are promoted: junior, senior, then lead."
+      }
+    },
+    {
+      "id": "q06",
+      "question": "What is the difference between verification and validation?",
+      "keyPoints": ["verification: are we building the product right (meets spec)", "validation: are we building the right product (meets user needs)", "verification often static (reviews), validation dynamic (testing with users/requirements)"],
+      "answers": {
+        "strong": "Verification asks 'are we building the product right?', checking that the work matches its specification, often through reviews, walkthroughs and static analysis. Validation asks 'are we building the right product?', checking that the product actually meets the user's needs, usually by executing and testing it against real requirements and user scenarios. You can pass verification and still fail validation if the spec itself was wrong.",
+        "partial": "Verification is checking the requirements and validation is testing the software.",
+        "weak": "Verification and validation are the same thing; both mean checking that the password is correct."
+      }
+    },
+    {
+      "id": "q07",
+      "question": "What is boundary value analysis? Give an example.",
+      "keyPoints": ["test at the edges of input ranges where bugs cluster", "values at, just below and just above each boundary", "concrete example with a range"],
+      "answers": {
+        "strong": "Boundary value analysis tests the edges of input ranges, because off-by-one errors cluster there. For each boundary you test the value at the boundary and just below and above it. For example, if a quantity field accepts 1 to 99, I'd test 0, 1, 2 and 98, 99, 100.",
+        "partial": "You test the minimum and maximum values of an input.",
+        "weak": "Boundary value analysis means testing only with random values to find unexpected bugs."
+      }
+    },
+    {
+      "id": "q08",
+      "question": "What is the difference between a mock and a stub?",
+      "keyPoints": ["both are test doubles replacing dependencies", "stub returns canned data (state verification)", "mock also verifies interactions/expectations (behaviour verification)"],
+      "answers": {
+        "strong": "Both are test doubles that replace a real dependency. A stub just returns canned answers so the code under test can run, and you check the resulting state. A mock is programmed with expectations about how it should be called, and the test verifies those interactions, like 'sendEmail was called once with this address'. So stubs support state verification, mocks support behaviour verification.",
+        "partial": "Both are fake objects for testing. A mock is more advanced than a stub.",
+        "weak": "A mock is a meeting where the team practices the demo, and a stub is the receipt from a purchase."
+      }
+    },
+    {
+      "id": "q09",
+      "question": "How would you test a REST API endpoint, for example POST /users?",
+      "keyPoints": ["status codes for success and errors (201, 400, 401, 409)", "response body/schema and persisted data", "validation: missing/invalid fields, duplicates, auth", "headers, idempotency/security, performance as relevant"],
+      "answers": {
+        "strong": "For POST /users I'd check the happy path returns 201 with the right body and schema, and that the user is really persisted, for example via GET. Then negative cases: missing or invalid fields return 400 with clear errors, a duplicate email returns 409, and calls without a valid token return 401 or 403. I'd also check headers like Content-Type, boundary lengths, special characters and injection payloads, and that sensitive data like passwords never comes back in the response.",
+        "partial": "I would send a request with Postman and check that it returns 200.",
+        "weak": "I would open the website and click around to see if users can register."
+      }
+    },
+    {
+      "id": "q10",
+      "question": "Why should automated UI tests avoid fixed sleeps, and what should they use instead?",
+      "keyPoints": ["fixed sleeps are slow and still flaky (too short or too long)", "use explicit/auto waits for conditions", "e.g. Playwright auto-waiting, web-first assertions, waiting for network responses"],
+      "answers": {
+        "strong": "Fixed sleeps are both slow and flaky: they wait the full time even when the page is ready, and still fail when the app is slower than the sleep. Instead you wait for a condition: frameworks like Playwright auto-wait for elements to be actionable, and web-first assertions like toBeVisible retry until the condition holds or times out. For async work you can wait for a specific network response.",
+        "partial": "Sleeps make tests slow, so you should use waits instead.",
+        "weak": "Tests should use longer sleeps, like 30 seconds, so the page always has time to load."
+      }
+    },
+    {
+      "id": "q11",
+      "question": "What is continuous integration and how do automated tests fit into it?",
+      "keyPoints": ["merge to a shared branch frequently", "every change triggers automated build and tests", "fast feedback; broken builds fixed quickly; tests as quality gate"],
+      "answers": {
+        "strong": "Continuous integration means developers merge small changes into a shared branch frequently, and every change automatically triggers a build and the automated tests. The tests act as a quality gate: fast checks like unit tests and linting run on every commit, slower suites on merges or nightly, and a failing pipeline blocks the merge so problems are found within minutes, not at the end of a release.",
+        "partial": "CI is when the code is built automatically. Tests can run there too.",
+        "weak": "Continuous integration is when testers keep working on the same test case continuously until it passes."
+      }
+    },
+    {
+      "id": "q12",
+      "question": "What is equivalence partitioning?",
+      "keyPoints": ["divide inputs into classes expected to behave the same", "test one representative per class", "include invalid partitions; reduces number of tests"],
+      "answers": {
+        "strong": "Equivalence partitioning divides the input space into classes that the system should treat the same way, then tests one representative value from each class instead of every value. For an age field accepting 18 to 65 there are three partitions: below 18 (invalid), 18-65 (valid), above 65 (invalid). It cuts the number of tests while keeping coverage, and pairs well with boundary value analysis.",
+        "partial": "It means splitting test data into groups.",
+        "weak": "Equivalence partitioning means splitting the test team into equal groups so everyone has the same workload."
+      }
+    },
+    {
+      "id": "q13",
+      "question": "What is the difference between bug severity and priority?",
+      "keyPoints": ["severity = impact on the system/user (technical)", "priority = urgency/order of fixing (business)", "they can differ, with examples"],
+      "answers": {
+        "strong": "Severity is how much impact a bug has on the system or the user, for example a crash or data loss is critical. Priority is how urgently it should be fixed, which is a business decision. They can differ: a typo in the company name on the home page is low severity but high priority, while a crash in a rarely used admin report may be high severity but lower priority.",
+        "partial": "Severity is how bad the bug is and priority is how fast to fix it.",
+        "weak": "Severity is decided by developers and priority by testers, and both always have the same value."
+      }
+    },
+    {
+      "id": "q14",
+      "question": "What does idempotent mean for HTTP methods, and which methods are idempotent?",
+      "keyPoints": ["same request repeated has the same effect on server state as once", "GET, PUT, DELETE, HEAD, OPTIONS are idempotent", "POST is not (creates new resources); PATCH not guaranteed"],
+      "answers": {
+        "strong": "An idempotent request has the same effect on the server whether you send it once or many times. GET, HEAD, OPTIONS, PUT and DELETE are idempotent: putting the same resource twice leaves the same state, deleting twice still leaves it deleted. POST is not, because repeating it usually creates duplicates, and PATCH isn't guaranteed to be. This matters for safe retries.",
+        "partial": "Idempotent means a request doesn't change anything. GET is idempotent.",
+        "weak": "Idempotent means the request is encrypted, so only HTTPS methods are idempotent."
+      }
+    },
+    {
+      "id": "q15",
+      "question": "How do you manage test data in automated tests?",
+      "keyPoints": ["each test creates/owns its data (isolation)", "avoid shared mutable accounts; unique ids", "setup via API/fixtures/seeding; cleanup or fresh environments"],
+      "answers": {
+        "strong": "I make each test own its data: it creates what it needs, ideally through the API or fixtures rather than the UI, with unique values like generated emails so parallel runs don't collide. I avoid shared mutable accounts, which get locked or changed by other tests. For bigger setups I seed a fresh database per run, for example a Dockerized app, and clean up or rely on the environment being disposable.",
+        "partial": "I keep test data in an Excel file and read it in the tests.",
+        "weak": "I use the production database because it has the most realistic data."
+      }
+    },
+    {
+      "id": "q16",
+      "question": "What is contract testing?",
+      "keyPoints": ["verifies two services agree on API interface", "consumer-driven contracts (e.g. Pact)", "faster/cheaper than full end-to-end integration, catches breaking changes early"],
+      "answers": {
+        "strong": "Contract testing checks that two services agree on the interface between them without running both together. In consumer-driven contract testing, for example with Pact, the consumer records the requests it makes and the responses it expects; the provider then verifies it still satisfies that contract in its own pipeline. It catches breaking API changes early and is much faster and less flaky than full end-to-end integration tests.",
+        "partial": "Contract testing tests the API between two systems.",
+        "weak": "Contract testing is when the legal team reviews the contract before the software is sold."
+      }
+    }
+  ],
+  "nonAnswers": [
+    { "id": "n01", "questionId": "q03", "answer": "", "expected": [1, 2], "note": "empty answer" },
+    { "id": "n02", "questionId": "q07", "answer": "I don't know, but I am a very fast learner and I love testing!", "expected": [1, 3], "note": "no technical content" }
+  ]
+}

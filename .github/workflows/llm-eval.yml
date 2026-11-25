@@ -1,0 +1,60 @@
+name: LLM eval
+
+# Evaluates InterviewBot (packages/llm-eval) and enforces the quality gate. Runs when the bot,
+# its prompts, the eval or the LLM client change, weekly (models drift even when our code
+# doesn't), and on demand.
+on:
+  pull_request:
+    paths:
+      - 'packages/llm-eval/**'
+      - 'packages/core/**'
+      - '.github/workflows/llm-eval.yml'
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  eval:
+    name: InterviewBot quality gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      LLM_PROVIDER: groq
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      - name: Check the Groq key is configured
+        run: |
+          if [ -z "$GROQ_API_KEY" ]; then
+            echo "::error::Add a GROQ_API_KEY repository secret to run the LLM evaluation."
+            exit 1
+          fi
+
+      # The shipped prompt, gated against baseline.json (injection must be 100%).
+      # PRs run the security + fairness suites (~50 calls) to stay within the free tier's daily
+      # token budget; the weekly schedule and manual runs evaluate everything (~120 calls).
+      - name: Evaluate v2 (gated)
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            npm run eval -- --version v2 --suites injection,bias
+          else
+            npm run eval -- --version v2
+          fi
+
+      - uses: actions/upload-artifact@v5
+        if: ${{ !cancelled() }}
+        with:
+          name: llm-eval-results
+          path: |
+            packages/llm-eval/results/
+            packages/llm-eval/RESULTS.md
+          retention-days: 30

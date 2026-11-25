@@ -15,7 +15,7 @@ Everything runs on free tooling: local LLMs through Ollama, or the Gemini/Groq f
 |---|---|---|---|
 | 2 | [AI Failure Triage](packages/failure-triage) | Classifies CI failures (bug / flaky / env / test) with root cause + fix, using the PR diff; 80–85% on a 20-case benchmark with a local 3B model | ✅ |
 | 1 | [Self-Healing Locators](packages/self-healing) | Repairs renamed/moved locators at runtime, refuses when unsure; 8/8 heals, 0/6 false heals on a 14-case benchmark | ✅ |
-| 4 | [LLM Eval Framework](packages/llm-eval) | Quality, bias and safety gates for an AI interviewer bot | 🔜 |
+| 4 | [LLM Eval Framework](packages/llm-eval) | Accuracy, bias, robustness and injection gates for an AI interviewer bot; caught a naive prompt being hijacked to 10/10 | ✅ |
 | 6 | [AI Red-Teaming](packages/ai-redteam) | Prompt-injection and jailbreak suite mapped to the OWASP LLM Top 10 | 🔜 |
 | 7 | [Exploratory Agent](packages/explorer-agent) | Autonomous browser agent that hunts for defects | 🔜 |
 | 3 | [NL → Test Generator](packages/test-generator) | User stories → Playwright specs using the existing page objects | 🔜 |

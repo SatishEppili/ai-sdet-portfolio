@@ -20,7 +20,9 @@
     "triage:bench": "tsx packages/failure-triage/src/bench.ts",
     "heal:learn": "tsx packages/self-healing/src/learn.ts",
     "heal:bench": "tsx packages/self-healing/src/bench.ts",
-    "heal:report": "tsx packages/self-healing/src/report.ts"
+    "heal:report": "tsx packages/self-healing/src/report.ts",
+    "interviewer": "tsx packages/llm-eval/app/server.ts",
+    "eval": "tsx packages/llm-eval/src/run.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",

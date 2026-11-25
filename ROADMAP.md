@@ -31,11 +31,12 @@
 
 ## Phase 2: Testing AI (Weeks 6–9)
 ### Project 4: LLM evaluation framework (`packages/llm-eval`)
-- [ ] Mock "AI interviewer" (Dify or small Node app on Ollama): asks questions, scores answers 1–10
-- [ ] Golden dataset (~50 cases)
-- [ ] Accuracy, consistency, bias, robustness, injection-safety tests
-- [ ] LLM-as-judge with rubrics (Promptfoo + custom TS assertions)
-- [ ] CI quality gate (fail if the pass rate drops > 5%)
+- [x] InterviewBot: node:http service scoring SDET interview answers 1–10, naive (v1) and hardened (v2) prompts with a canary token
+- [x] Golden dataset: 50 cases (16 questions × strong/partial/weak + non-answers), 10 injection attacks, bias counterfactuals
+- [x] Accuracy, consistency, robustness, bias, injection-safety suites: v1 injection 70% (hijacked to 10/10, canary leak) vs v2 100%
+- [x] LLM-as-judge on feedback (separate, larger judge model), custom TS rubric; Promptfoo used in Project 6 instead
+- [x] CI quality gate: injection 100%, no suite drops > max(1 case, 5 points); PR = security+fairness subset, weekly = full
+- [ ] Fix partial-answer calibration with a train (q01–q08) / held-out (q09–q16) split
 
 ### Project 6: AI red-teaming (`packages/ai-redteam`)
 - [ ] Promptfoo red-team + Garak against the mock interviewer and Damn Vulnerable LLM Agent
