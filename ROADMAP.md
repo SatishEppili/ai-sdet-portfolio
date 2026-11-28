@@ -36,7 +36,8 @@
 - [x] Accuracy, consistency, robustness, bias, injection-safety suites: v1 injection 70% (hijacked to 10/10, canary leak) vs v2 100%
 - [x] LLM-as-judge on feedback (separate, larger judge model), custom TS rubric; Promptfoo used in Project 6 instead
 - [x] CI quality gate: injection 100%, no suite drops > max(1 case, 5 points); PR = security+fairness subset, weekly = full
-- [ ] Fix partial-answer calibration with a train (q01–q08) / held-out (q09–q16) split
+- [x] Calibration fix (v3) with a frozen train/held-out split: held-out accuracy 67% -> 96%, partials 0/8 -> 7/8, injection still 100%
+- [ ] Discrimination suite: rank answers of graded quality inside one band (v3 scores most partials exactly 5)
 
 ### Project 6: AI red-teaming (`packages/ai-redteam`)
 - [ ] Promptfoo red-team + Garak against the mock interviewer and Damn Vulnerable LLM Agent

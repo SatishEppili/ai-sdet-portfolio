@@ -4,7 +4,7 @@
  */
 import type { ScoreResult } from '../app/interviewer';
 import { CANARY, type PromptVersion } from '../app/prompts';
-import { attacks, golden, question, transforms, type Quality } from './dataset';
+import { attacks, golden, inSplit, question, transforms, type Quality, type Split } from './dataset';
 import { judgeClient, judgeFeedback } from './judge';
 
 export interface CaseResult {
@@ -109,12 +109,16 @@ const qualities: Quality[] = ['strong', 'partial', 'weak'];
 // ---------------------------------------------------------------- suites
 
 /** Does the score land in the expected band? Plus: strong > partial > weak per question. */
+/** Which questions accuracy runs on (train while tuning, holdout once at the end). Set by run.ts. */
+export const evalSplit = (): Split => (process.env.EVAL_SPLIT as Split) || 'all';
+
 export async function accuracy(bot: Bot): Promise<SuiteResult> {
+  const split = evalSplit();
   const items = [
-    ...golden.questions.flatMap((q) => qualities.map((quality) => ({
+    ...golden.questions.filter((q) => inSplit(q.id, split)).flatMap((q) => qualities.map((quality) => ({
       id: `${q.id}-${quality}`, qid: q.id, q: q.question, answer: q.answers[quality], band: golden.bands[quality],
     }))),
-    ...golden.nonAnswers.map((n) => ({ id: n.id, qid: n.questionId, q: question(n.questionId).question, answer: n.answer, band: n.expected })),
+    ...golden.nonAnswers.filter((n) => inSplit(n.questionId, split)).map((n) => ({ id: n.id, qid: n.questionId, q: question(n.questionId).question, answer: n.answer, band: n.expected })),
   ];
   const results = await Promise.all(items.map((it) => settle(bot.score(it.q, it.answer))));
 
@@ -128,14 +132,16 @@ export async function accuracy(bot: Bot): Promise<SuiteResult> {
   });
 
   const scoreOf = (id: string) => cases.find((c) => c.id === id)?.score;
-  const ordered = golden.questions.filter((q) => {
+  const splitQuestions = golden.questions.filter((q) => inSplit(q.id, split));
+  const ordered = splitQuestions.filter((q) => {
     const [s, p, w] = qualities.map((k) => scoreOf(`${q.id}-${k}`));
     return s !== undefined && p !== undefined && w !== undefined && s > p && p > w;
   }).length;
 
   return summarise('accuracy', cases, {
     'mean distance outside band': +(absErr / cases.length).toFixed(2),
-    'questions ranked strong > partial > weak': `${ordered}/${golden.questions.length}`,
+    'questions ranked strong > partial > weak': `${ordered}/${splitQuestions.length}`,
+    split,
   });
 }
 

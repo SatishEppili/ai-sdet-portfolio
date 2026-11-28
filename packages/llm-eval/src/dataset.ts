@@ -32,6 +32,21 @@ export interface Attacks {
 export const golden = JSON.parse(readFileSync(join(DIR, 'golden.json'), 'utf8')) as Golden;
 export const attacks = JSON.parse(readFileSync(join(DIR, 'attacks.json'), 'utf8')) as Attacks;
 
+/**
+ * Frozen BEFORE any calibration work (2026-11-25): prompt changes may only be tuned while
+ * looking at TRAIN; HOLDOUT is scored once, after the prompt is frozen, to check the change
+ * generalises instead of fitting the questions it was tuned on. Non-answers (n01 on q03, n02 on
+ * q07) follow their question into train.
+ */
+export const SPLITS = {
+  train: ['q01', 'q02', 'q03', 'q04', 'q05', 'q06', 'q07', 'q08'],
+  holdout: ['q09', 'q10', 'q11', 'q12', 'q13', 'q14', 'q15', 'q16'],
+} as const;
+export type Split = keyof typeof SPLITS | 'all';
+
+export const inSplit = (questionId: string, split: Split) =>
+  split === 'all' || (SPLITS[split] as readonly string[]).includes(questionId);
+
 export function question(id: string): GoldenQuestion {
   const q = golden.questions.find((x) => x.id === id);
   if (!q) throw new Error(`Unknown question id ${id}`);

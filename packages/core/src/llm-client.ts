@@ -241,7 +241,10 @@ async function withRetry<T>(fn: () => Promise<T>, attempts = 5, rateLimitAttempt
       if (http?.status === 429 && /per day|TPD|RPD/i.test(http.message)) {
         throw new Error(`Daily LLM quota exhausted; try later, use another model/provider, or upgrade. ${http.message}`);
       }
-      const retryable = http ? http.status === 429 || http.status >= 500 : false;
+      // Network drops ("fetch failed", resets) are as transient as a 503: the v3 eval run lost 3
+      // calls to them. Timeouts (AbortError/TimeoutError) are not retried: the caller set that budget.
+      const networkDrop = !http && err instanceof TypeError && /fetch failed|ECONNRESET|socket|network/i.test(`${err.message} ${(err as { cause?: unknown }).cause ?? ''}`);
+      const retryable = http ? http.status === 429 || http.status >= 500 : networkDrop;
       if (!retryable || i >= (http?.status === 429 ? rateLimitAttempts : attempts)) throw err;
       const backoff = Math.min(16_000, 1000 * 2 ** (i - 1));
       const wait = Math.min(30_000, (http?.retryAfterMs ?? backoff) * 1.1) + Math.random() * 500;
