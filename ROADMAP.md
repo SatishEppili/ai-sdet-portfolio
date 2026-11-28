@@ -50,9 +50,11 @@
 - [ ] Detects console errors, failed requests, broken links, axe-core violations
 - [ ] Findings report on Toolshop + Juice Shop
 
-### Project 3: NL → Playwright test generator (stretch, `packages/test-generator`)
-- [ ] User story → spec that uses existing page objects
-- [ ] Compile + dry-run validation loop
+### Project 3: NL → Playwright test generator (`packages/test-generator`)
+- [x] User story → spec using page objects and fixtures; context extracted from the source on every run
+- [x] Static rules → typecheck → run, with a 3-attempt fix loop fed by page validation messages and API errors
+- [x] Mutation-testing benchmark (12 stories + 2 unsupported, mutants validated by reference tests): 12/12 useful, 0 fake passes
+- [x] Page-object gap detection (the model never self-declares "unsupported"; the tool detects raw locators)
 
 ## Phase 4: Polish and publish (Week 12)
 - [ ] README: architecture diagram, metrics table, badges

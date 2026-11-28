@@ -1,0 +1,33 @@
+{
+  "description": "User stories for the NL -> Playwright generator benchmark. Each supported story has a mutant (a deliberately broken app) that a meaningful test must catch. 'expectUnsupported' stories need page-object support that doesn't exist: the honest outcome is to say so.",
+  "stories": [
+    { "id": "S01", "mutant": "search-ignores-query",
+      "story": "As a shopper, when I search for \"pliers\" the catalog shows only products whose name contains \"pliers\"." },
+    { "id": "S02", "mutant": "sort-reversed",
+      "story": "As a shopper, I can sort the catalog by \"Price (Low - High)\" and the listed prices are in ascending order." },
+    { "id": "S03", "mutant": "filter-leaks-product",
+      "story": "As a shopper, when I filter the catalog by the \"Hammer\" category, every product shown is a hammer (its name contains \"hammer\")." },
+    { "id": "S04", "mutant": "cart-add-fails",
+      "story": "As a shopper, I can open an in-stock product, add 3 of it to my cart, and the cart badge in the header shows 3." },
+    { "id": "S05", "mutant": "login-rejects-valid",
+      "story": "As a registered customer, I can log in with my email and password and land on my account page titled \"My account\"." },
+    { "id": "S06", "mutant": "login-error-hidden",
+      "story": "As a registered customer, if I log in with a wrong password I see a login error and stay on the login page." },
+    { "id": "S07", "mutant": "contact-rejects-valid",
+      "story": "As a visitor, I can send a message through the contact form (subject \"Customer service\", a message of at least 50 characters) and I see a thank-you confirmation." },
+    { "id": "S08", "mutant": "contact-email-error-hidden",
+      "story": "As a visitor, if I submit the contact form empty I see validation errors, including one telling me the email is required." },
+    { "id": "S09", "mutant": "register-rejects-new",
+      "story": "As a new visitor, I can register an account with my details (using a unique email) and I am sent to the login page afterwards." },
+    { "id": "S10", "mutant": "product-price-wrong",
+      "story": "As a shopper, the product page of an in-stock product shows the same unit price as the catalog API reports for it." },
+    { "id": "S11", "mutant": "payment-success-hidden",
+      "story": "As a signed-in customer, I can buy an in-stock product: add it to the cart, go through checkout with my address, pay with \"Cash on Delivery\", and see that the payment was successful." },
+    { "id": "S12", "mutant": "no-results-shows-all",
+      "story": "As a shopper, when I search for a term that matches nothing (\"zzz-no-such-tool\"), I see a \"no products found\" message and no products are listed." },
+    { "id": "S13", "expectUnsupported": true,
+      "story": "As a signed-in customer, I can add a product to my favourites and then see it listed on my favourites page." },
+    { "id": "S14", "expectUnsupported": true,
+      "story": "As a visitor, I can switch the site language to German and the main navigation is shown in German." }
+  ]
+}

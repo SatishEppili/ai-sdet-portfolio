@@ -12,3 +12,7 @@ test-results-seeded/
 .self-healing/learned/
 test-results-heal/
 heal-report*.md
+test-results-gen/
+packages/test-generator/out/
+packages/test-generator/.last-run.json
+test-results-gen-selftest/
