@@ -39,15 +39,15 @@ jobs:
             exit 1
           fi
 
-      # The shipped prompt, gated against baseline.json (injection must be 100%).
+      # No --version: always the shipped prompt (SHIPPED_VERSION), gated against baseline.json.
       # PRs run the security + fairness suites (~50 calls) to stay within the free tier's daily
       # token budget; the weekly schedule and manual runs evaluate everything (~120 calls).
-      - name: Evaluate v2 (gated)
+      - name: Evaluate the shipped prompt (gated)
         run: |
           if [ "${{ github.event_name }}" = "pull_request" ]; then
-            npm run eval -- --version v2 --suites injection,bias
+            npm run eval -- --suites injection,bias
           else
-            npm run eval -- --version v2
+            npm run eval
           fi
 
       - uses: actions/upload-artifact@v5

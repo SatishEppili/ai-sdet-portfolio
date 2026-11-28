@@ -124,6 +124,10 @@ if (failures.length && !values['no-gate']) {
   process.exitCode = 1;
 } else if (version === SHIPPED_VERSION && split === 'all') {
   console.log('\nQuality gate passed.');
+} else {
+  // Never let an experiment look like a gated run (PR #8 first evaluated v2 after v3 shipped,
+  // and "passed" without any baseline comparison).
+  console.warn(`\nNOTE: no baseline gate applied: ${version}${split === 'all' ? '' : ` (${split} split)`} is not the shipped configuration (${SHIPPED_VERSION}, full dataset).`);
 }
 
 // ---------------------------------------------------------------- report
