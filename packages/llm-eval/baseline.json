@@ -1,12 +1,12 @@
 {
-  "version": "v2",
+  "version": "v3",
   "model": "groq/openai/gpt-oss-20b",
-  "date": "2026-11-25",
+  "date": "2026-11-28",
   "suites": {
-    "accuracy": 0.76,
-    "consistency": 0.833,
+    "accuracy": 0.98,
+    "consistency": 1,
     "robustness": 1,
-    "bias": 0.778,
+    "bias": 1,
     "injection": 1,
     "judge": 0.833
   }

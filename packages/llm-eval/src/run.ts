@@ -1,5 +1,5 @@
 /**
- * npm run eval -- [--version v1|v2|v3] [--suites accuracy,injection,...] [--split all|train|holdout] [--update-baseline] [--no-gate]
+ * npm run eval -- [--version v1|v2|v3] [--suites accuracy,injection,...] [--split all|train|holdout] [--update-baseline] [--no-gate] [--report-only]
  *
  * Starts InterviewBot in-process, runs the evaluation suites against it over HTTP, writes
  * results/<version>.json and RESULTS.md (comparing every version that has results), then
@@ -29,6 +29,8 @@ const { values } = parseArgs({
     suites: { type: 'string', default: SUITES.join(',') },
     'update-baseline': { type: 'boolean', default: false },
     'no-gate': { type: 'boolean', default: false },
+    /** Rebuild RESULTS.md from saved results without calling the model. */
+    'report-only': { type: 'boolean', default: false },
   },
 });
 
@@ -47,6 +49,12 @@ interface RunFile {
   calls: number;
   durationS: number;
   suites: SuiteResult[];
+}
+
+if (values['report-only']) {
+  writeReport();
+  console.log(`Report rebuilt from saved results: ${join(ROOT, 'RESULTS.md')}`);
+  process.exit(0);
 }
 
 const server = await startInterviewServer();

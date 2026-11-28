@@ -13,7 +13,7 @@ export type PromptVersion = 'v1' | 'v2' | 'v3';
 export const PROMPT_VERSIONS: PromptVersion[] = ['v1', 'v2', 'v3'];
 
 /** The version the product ships; the quality gate and baseline track this one. */
-export const SHIPPED_VERSION: PromptVersion = 'v2';
+export const SHIPPED_VERSION: PromptVersion = 'v3';
 
 /** v3 only. Diagnosis from the train split: vague-but-not-wrong partial answers were scored 1-3. */
 const CALIBRATION = `
