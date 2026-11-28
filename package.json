@@ -22,7 +22,9 @@
     "heal:bench": "tsx packages/self-healing/src/bench.ts",
     "heal:report": "tsx packages/self-healing/src/report.ts",
     "interviewer": "tsx packages/llm-eval/app/server.ts",
-    "eval": "tsx packages/llm-eval/src/run.ts"
+    "eval": "tsx packages/llm-eval/src/run.ts",
+    "gen:test": "tsx packages/test-generator/src/cli.ts",
+    "gen:bench": "tsx packages/test-generator/src/bench.ts"
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",

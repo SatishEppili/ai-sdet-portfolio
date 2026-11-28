@@ -1,0 +1,186 @@
+[
+  {
+    "id": "S01",
+    "ok": true,
+    "verdict": "useful: caught the mutant",
+    "attempts": [
+      "passed"
+    ],
+    "rawLocators": 0,
+    "gaps": [],
+    "unsupported": "",
+    "mutant": "failed"
+  },
+  {
+    "id": "S02",
+    "ok": true,
+    "verdict": "useful: caught the mutant",
+    "attempts": [
+      "run",
+      "run",
+      "passed"
+    ],
+    "rawLocators": 0,
+    "gaps": [],
+    "unsupported": "",
+    "mutant": "failed"
+  },
+  {
+    "id": "S03",
+    "ok": true,
+    "verdict": "useful: caught the mutant",
+    "attempts": [
+      "run",
+      "typecheck",
+      "passed"
+    ],
+    "rawLocators": 0,
+    "gaps": [],
+    "unsupported": "",
+    "mutant": "failed"
+  },
+  {
+    "id": "S04",
+    "ok": true,
+    "verdict": "useful: caught the mutant",
+    "attempts": [
+      "passed"
+    ],
+    "rawLocators": 0,
+    "gaps": [],
+    "unsupported": "",
+    "mutant": "failed"
+  },
+  {
+    "id": "S05",
+    "ok": true,
+    "verdict": "useful: caught the mutant",
+    "attempts": [
+      "passed"
+    ],
+    "rawLocators": 0,
+    "gaps": [],
+    "unsupported": "",
+    "mutant": "failed"
+  },
+  {
+    "id": "S06",
+    "ok": true,
+    "verdict": "useful: caught the mutant",
+    "attempts": [
+      "passed"
+    ],
+    "rawLocators": 0,
+    "gaps": [],
+    "unsupported": "",
+    "mutant": "failed"
+  },
+  {
+    "id": "S07",
+    "ok": true,
+    "verdict": "useful: caught the mutant",
+    "attempts": [
+      "passed"
+    ],
+    "rawLocators": 0,
+    "gaps": [],
+    "unsupported": "",
+    "mutant": "failed"
+  },
+  {
+    "id": "S08",
+    "ok": true,
+    "verdict": "useful: caught the mutant",
+    "attempts": [
+      "passed"
+    ],
+    "rawLocators": 0,
+    "gaps": [],
+    "unsupported": "",
+    "mutant": "failed"
+  },
+  {
+    "id": "S09",
+    "ok": true,
+    "verdict": "useful: caught the mutant",
+    "attempts": [
+      "run",
+      "run",
+      "passed"
+    ],
+    "rawLocators": 0,
+    "gaps": [],
+    "unsupported": "",
+    "mutant": "failed"
+  },
+  {
+    "id": "S10",
+    "ok": true,
+    "verdict": "useful: caught the mutant",
+    "attempts": [
+      "run",
+      "passed"
+    ],
+    "rawLocators": 0,
+    "gaps": [],
+    "unsupported": "",
+    "mutant": "failed"
+  },
+  {
+    "id": "S11",
+    "ok": true,
+    "verdict": "useful: caught the mutant",
+    "attempts": [
+      "passed"
+    ],
+    "rawLocators": 0,
+    "gaps": [],
+    "unsupported": "",
+    "mutant": "failed"
+  },
+  {
+    "id": "S12",
+    "ok": true,
+    "verdict": "useful: caught the mutant",
+    "attempts": [
+      "passed"
+    ],
+    "rawLocators": 1,
+    "gaps": [
+      "page.getByText(/no products found/i)"
+    ],
+    "unsupported": "",
+    "mutant": "failed"
+  },
+  {
+    "id": "S13",
+    "ok": true,
+    "verdict": "gap detected by tool (2 raw locators)",
+    "attempts": [
+      "run",
+      "run",
+      "run"
+    ],
+    "rawLocators": 2,
+    "gaps": [
+      "page.getByRole('button', { name: /add to favourites/i })",
+      "page.getByTestId('favourite-list')"
+    ],
+    "unsupported": ""
+  },
+  {
+    "id": "S14",
+    "ok": true,
+    "verdict": "gap detected by tool (1 raw locators)",
+    "attempts": [
+      "run",
+      "run",
+      "typecheck"
+    ],
+    "rawLocators": 1,
+    "gaps": [
+      "page.getByLabel(/language|sprache/i)"
+    ],
+    "unsupported": ""
+  }
+]

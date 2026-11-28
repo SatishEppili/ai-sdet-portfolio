@@ -18,7 +18,7 @@ Everything runs on free tooling: local LLMs through Ollama, or the Gemini/Groq f
 | 4 | [LLM Eval Framework](packages/llm-eval) | Accuracy, bias, robustness and injection gates for an AI interviewer bot; caught a naive prompt hijacked to 10/10; held-out-validated calibration fix (67% → 96%) | ✅ |
 | 6 | [AI Red-Teaming](packages/ai-redteam) | Prompt-injection and jailbreak suite mapped to the OWASP LLM Top 10 | 🔜 |
 | 7 | [Exploratory Agent](packages/explorer-agent) | Autonomous browser agent that hunts for defects | 🔜 |
-| 3 | [NL → Test Generator](packages/test-generator) | User stories → Playwright specs using the existing page objects | 🔜 |
+| 3 | [NL → Test Generator](packages/test-generator) | User stories → Playwright specs on the existing page objects; 12/12 catch a seeded bug (mutation testing), 0 fake passes | ✅ |
 
 See [ROADMAP.md](ROADMAP.md) for progress.
 

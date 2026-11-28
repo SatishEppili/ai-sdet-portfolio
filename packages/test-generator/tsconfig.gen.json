@@ -1,0 +1,6 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": { "noEmit": true },
+  "include": ["out/**/*.ts", "bench/**/*.ts", "../../src/**/*.ts", "../../packages/core/**/*.ts", "../../packages/self-healing/src/**/*.ts"],
+  "exclude": []
+}

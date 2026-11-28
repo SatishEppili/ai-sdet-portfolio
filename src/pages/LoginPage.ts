@@ -4,7 +4,9 @@ export class LoginPage extends BasePage {
   readonly email = this.byTestId('email');
   readonly password = this.byTestId('password');
   readonly submit = this.byTestId('login-submit');
+  /** Validation error shown on the login form after a failed login. */
   readonly error = this.byTestId('login-error');
+  /** Heading of the ACCOUNT page after a successful login ("My account"); not present on the login form. */
   readonly accountTitle = this.byTestId('page-title');
 
   async open() {
